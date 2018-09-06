@@ -5,10 +5,10 @@ CONFIG -= qt
 
 SOURCES += \
         main.cpp \
-    tweets.cpp
+    tweet.cpp
 
 HEADERS += \
-    tweets.h \
+    tweet.h
 
 DISTFILES += \
     100-user-tweets.csv \
