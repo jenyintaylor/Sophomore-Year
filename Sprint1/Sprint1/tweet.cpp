@@ -31,5 +31,15 @@ int Tweet::getTarget() {
 void Tweet::setTarget(int x) {
     target = x;
 }
+
+bool Tweet::status() { //Target determines sentiment, with 4 being positive and 0 negative
+    int sentiment;
+    sentiment = target;
+    if(sentiment > 0)
+        return 1;
+    else
+        return 0;
+
+}
 Tweet::~Tweet() {}
 

@@ -24,6 +24,8 @@ public:
     void setTarget(int x);
     int getTarget();
 
+    bool status();
+
 
 private:
     long id;
