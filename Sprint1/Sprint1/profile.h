@@ -8,7 +8,7 @@
 
 class Profile {
 public:
-    Profile(Tweet t);
+    Profile(std::string n);
     ~Profile();
 
     void addTweet(Tweet t);
@@ -20,7 +20,6 @@ public:
 private:
     std::string name;
     std::vector<Tweet> timeline;
-    Tweet thisTweet;
 
 
 };

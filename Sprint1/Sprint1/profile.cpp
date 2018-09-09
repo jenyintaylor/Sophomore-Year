@@ -4,12 +4,10 @@
 
 using namespace std;
 
-Profile::Profile(Tweet t)
-    :thisTweet(t) {
-    timeline.push_back(t);
+Profile::Profile(string n)
+    :name(n) {
 }
 string Profile::getUser() {
-    name = thisTweet.getUser();
     return name;
 }
 
