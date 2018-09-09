@@ -11,7 +11,8 @@ public:
     Profile(Tweet t);
     ~Profile();
 
-    std::string getID();
+    void addTweet(Tweet t);
+    std::string getUser();
     int totalTweets();
     int posTweets();
     int negTweets();

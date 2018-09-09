@@ -17,8 +17,24 @@ int negCounter = 0;
 void tweetScanner(long a, string b, string c, int d) {
     Tweet info(a, b, c, d);
     feed.push_back(info);
-    tweetCounter++;
 
+    if(feed.size() > 1) {
+        for(unsigned int i = 0; i < tweeters.size(); i++) {
+            if(b.compare(feed[i].getUser()) == 0) {
+                tweeters[i].addTweet(info);
+                break;
+            } //if statement
+            else {
+                tweeters.push_back(info);
+                break;
+            }
+        }
+    } else {
+        tweeters.push_back(info);
+    }
+
+
+    tweetCounter++;
     if(d != 0)
         posCounter++;
     else
@@ -61,7 +77,8 @@ int main() {
             id = stol(p[0]);
             user = p[1];
             text = p[2];
-            target = (int)line.back();
+            char w = p[2].back();
+            target = w - '0';
 
             tweetScanner(id, user, text, target);
 
@@ -69,7 +86,7 @@ int main() {
         }
 
     }
-    cout << tweetCounter << endl;
+    cout << tweeters.size() << endl;
     tweetfile.close();
     return 0;
 }

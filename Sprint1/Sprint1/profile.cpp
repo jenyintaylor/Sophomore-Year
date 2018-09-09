@@ -8,11 +8,14 @@ Profile::Profile(Tweet t)
     :thisTweet(t) {
     timeline.push_back(t);
 }
-string Profile::getID() {
-    name = thisTweet.getID();
+string Profile::getUser() {
+    name = thisTweet.getUser();
     return name;
 }
 
+void Profile::addTweet(Tweet t) {
+    timeline.push_back(t);
+}
 int Profile::totalTweets() {
     return timeline.size();
 }
