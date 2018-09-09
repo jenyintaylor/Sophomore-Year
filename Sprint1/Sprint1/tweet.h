@@ -1,5 +1,7 @@
 #ifndef TWEET_H
 #define TWEET_H
+
+
 #include <string>
 
 //Make class specifically for tweets.  Will make counting and sorting easier.

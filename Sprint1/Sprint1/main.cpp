@@ -3,15 +3,16 @@
 #include <string>
 #include <vector>
 #include "tweet.h"
+#include "profile.h"
 
 
 using namespace std;
 
 vector<Tweet> feed;
+vector<Profile> tweeters;
 int tweetCounter = 0;
 int posCounter = 0;
 int negCounter = 0;
-int users = 0;
 
 void tweetScanner(long a, string b, string c, int d) {
     Tweet info(a, b, c, d);
@@ -23,11 +24,7 @@ void tweetScanner(long a, string b, string c, int d) {
     else
         negCounter++;
 
-    if(tweetCounter > 1) {
-        for(int i = 0; i < feed.size(); i++) {
 
-        }
-    }
 }
 
 
@@ -72,7 +69,7 @@ int main() {
         }
 
     }
-    cout << users;
+    cout << tweetCounter << endl;
     tweetfile.close();
     return 0;
 }
