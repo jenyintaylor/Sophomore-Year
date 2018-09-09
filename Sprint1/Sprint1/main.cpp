@@ -7,8 +7,32 @@
 
 using namespace std;
 
+vector<Tweet> feed;
+int tweetCounter = 0;
+int posCounter = 0;
+int negCounter = 0;
+int users = 0;
+
+void tweetScanner(long a, string b, string c, int d) {
+    Tweet info(a, b, c, d);
+    feed.push_back(info);
+    tweetCounter++;
+
+    if(d != 0)
+        posCounter++;
+    else
+        negCounter++;
+
+    if(tweetCounter > 1) {
+        for(int i = 0; i < feed.size(); i++) {
+
+        }
+    }
+}
+
+
 int main() {
-    string skippedLine;
+    string skippedLine; //Top line doesn't have a use
     string line;
     fstream tweetfile("/home/student/Desktop/CSE2341-18F-Jeffrey-Taylor/Sprint1/Sprint1/5-user-tweets.csv");
 
@@ -34,19 +58,21 @@ int main() {
                 int dist = location - starter;
                 p[i] = line.substr(starter,dist);
                 starter = location + 1;
-                cout << p[i] << endl;
             }
             p[2] = line.substr(starter);
-            cout << p[2] << endl;
 
             id = stol(p[0]);
+            user = p[1];
+            text = p[2];
             target = (int)line.back();
 
+            tweetScanner(id, user, text, target);
 
 
         }
 
     }
+    cout << users;
     tweetfile.close();
     return 0;
 }
