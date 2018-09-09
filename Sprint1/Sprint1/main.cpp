@@ -2,6 +2,8 @@
 #include <fstream>
 #include <string>
 #include <vector>
+#include <algorithm>
+#include <set>
 #include "tweet.h"
 #include "profile.h"
 
@@ -9,29 +11,25 @@
 using namespace std;
 
 vector<Tweet> feed;
-vector<Profile> tweeters;
+vector<Profile> people;
 int tweetCounter = 0;
 int posCounter = 0;
 int negCounter = 0;
+set<string> usernames;
+
+void profileCreator() {
+    for(unsigned int i = 0; i < feed.size(); i++) {
+        usernames.insert(feed[i].getUser());
+    }
+    for(set<string>::iterator i = usernames.begin(); i != usernames.end(); i++) {
+        cout << *i << endl;
+    }
+
+}
 
 void tweetScanner(long a, string b, string c, int d) {
     Tweet info(a, b, c, d);
     feed.push_back(info);
-
-    if(feed.size() > 1) {
-        for(unsigned int i = 0; i < tweeters.size(); i++) {
-            if(b.compare(feed[i].getUser()) == 0) {
-                tweeters[i].addTweet(info);
-                break;
-            } //if statement
-            else {
-                tweeters.push_back(info);
-                break;
-            }
-        }
-    } else {
-        tweeters.push_back(info);
-    }
 
 
     tweetCounter++;
@@ -86,7 +84,8 @@ int main() {
         }
 
     }
-    cout << tweeters.size() << endl;
+    profileCreator();
+
     tweetfile.close();
     return 0;
 }
