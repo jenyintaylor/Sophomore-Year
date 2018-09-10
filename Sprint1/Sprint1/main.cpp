@@ -1,5 +1,6 @@
 #include <iostream>
 #include <fstream>
+#include <sstream>
 #include <string>
 #include <vector>
 #include <algorithm>
@@ -37,7 +38,52 @@ int main(int argc, char* argv[]) {
         }
     }
     profileCreator();
+//////////////////////////
+    stringstream s, ss, sss;
+    s.str(feed[1].getText());
+    vector<string> words;
+    string shrinker;
+    s.ignore(5, '[');
 
+
+    while(s.good()) {
+        string pieces;
+        getline(s, pieces, ']');
+        words.push_back(pieces);
+    }
+    words.pop_back();
+    for(unsigned int i = 0; i < words.size(); i++) {
+        shrinker = words[i];
+        //cout << shrinker << endl;
+    }
+    words.clear();
+    ss.str(shrinker);
+
+    while(ss.good()) {
+        string pieces;
+        getline(ss, pieces, ')');
+        words.push_back(pieces);
+    }
+    shrinker = "";
+    for(unsigned int i = 0; i < words.size(); i++) {
+        shrinker = shrinker + words[i];
+    }
+
+    words.clear();
+    sss.str(shrinker);
+
+    while(sss.good()) {
+        string pieces;
+        getline(sss, pieces, '(');
+        words.push_back(pieces);
+    }
+    shrinker = "";
+    for(unsigned int i = 0; i < words.size(); i++) {
+        shrinker = shrinker + words[i];
+    }
+    cout << shrinker << endl;
+
+///////////////////////////////////
     tweetfile.close();
     return 0;
 }
@@ -64,9 +110,6 @@ void profileCreator() {
                 people[i].addTweet(feed[j]);
         }
     }
-    for(unsigned int i = 0; i < people.size(); i++) {
-        cout << people[i].getUser() << endl;
-    }
 }
 
 void tweetScanner(long a, string b, string c, int d) {
@@ -82,6 +125,8 @@ void tweetScanner(long a, string b, string c, int d) {
 
 
 }
+
+
 
 void fileReading(string l) {
     long id;

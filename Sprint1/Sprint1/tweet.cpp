@@ -1,12 +1,15 @@
 #include "tweet.h"
 #include <iostream>
 #include <string>
+#include <sstream>
 #include <tuple>
+#include <vector>
 
 using namespace std;
 
 Tweet::Tweet(long x, string n, string t, int i)
     :id(x), user(n), text(t), target(i) {
+
 }
 long Tweet::getID() {
     return id;
@@ -21,6 +24,48 @@ void Tweet::setUser(string a) {
     user = a;
 }
 string Tweet::getText() {
+//    stringstream s;
+//    s.str(text);
+//    vector<string> words;
+//    string shrinker;
+//    s.ignore(5, '[');
+
+
+//    while(s.good()) {
+//        string pieces;
+//        getline(s, pieces, ']');
+//        words.push_back(pieces);
+//    }
+//    words.pop_back();
+//    for(unsigned int i = 0; i < words.size(); i++) {
+//        shrinker = words[i];
+//        //cout << shrinker << endl;
+//    }
+//    words.clear();
+//    ss.str(shrinker);
+
+//    while(ss.good()) {
+//        string pieces;
+//        getline(ss, pieces, ')');
+//        words.push_back(pieces);
+//    }
+//    shrinker = "";
+//    for(unsigned int i = 0; i < words.size(); i++) {
+//        shrinker = shrinker + words[i];
+//    }
+
+//    words.clear();
+//    sss.str(shrinker);
+
+//    while(sss.good()) {
+//        string pieces;
+//        getline(sss, pieces, '(');
+//        words.push_back(pieces);
+//    }
+//    shrinker = "";
+//    for(unsigned int i = 0; i < words.size(); i++) {
+//        shrinker = shrinker + words[i];
+//    }
 
     return text;
 }
