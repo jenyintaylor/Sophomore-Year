@@ -2,7 +2,7 @@
 #include <string>
 #include <vector>
 
-using namespace std;
+using namespace std; //Most of this is pretty simple.
 
 Profile::Profile(string n)
     :name(n) {
@@ -34,6 +34,10 @@ int Profile::negTweets() {
             negCount++;
     }
     return negCount;
+}
+
+std::vector<Tweet> Profile::history() {
+    return timeline;
 }
 
 Profile::~Profile() {}

@@ -3,6 +3,8 @@
 
 
 #include <string>
+#include <vector>
+#include <tuple>
 
 //Make class specifically for tweets.  Will make counting and sorting easier.
 class Tweet {
@@ -28,12 +30,18 @@ public:
 
     bool status();
 
+    void organizer();
+
+    int wc();
+    std::string filler(std::string s);
+
 
 private:
     long id;
     std::string user;
     std::string text;
     int target;
+    std::vector<std::tuple<std::string, std::string>> vocab;
 
 };
 

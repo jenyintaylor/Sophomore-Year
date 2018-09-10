@@ -1,3 +1,4 @@
+// Jeffrey Taylor, Sprint 1, 47400760
 #include <iostream>
 #include <fstream>
 #include <sstream>
@@ -5,27 +6,41 @@
 #include <vector>
 #include <algorithm>
 #include <set>
+#include <cstdlib>
+#include <time.h>
 #include "tweet.h"
 #include "profile.h"
 
 
-using namespace std;
+using namespace std; //Made the mistake of not taking the extension, hit roadblock.
+//Did not finish as cleanly as I had hoped, and after taking a nap and making edits, the output file
+// is mostly blank.  The tweet statistics show up but the madlibs do not.
 
 void profileCreator();
 void tweetScanner(long a, string b, string c, int d);
 void fileReading(string l);
+void outer();
+float average(bool b);
+void madlibs();
+void madmagic(string s);
 
 vector<Tweet> feed;
 vector<Profile> people;
 int tweetCounter = 0;
 int posCounter = 0;
 int negCounter = 0;
+ofstream output;
+
 
 
 int main(int argc, char* argv[]) {
+
     string skippedLine;
     string line;
-    fstream tweetfile(argv[1]);
+    ifstream tweetfile(argv[1]);
+    ifstream maddlibs(argv[2]);
+    output.open(argv[3]);
+
 
     if(!tweetfile.is_open()) {
         cerr << "Could not find file." << endl;
@@ -38,53 +53,25 @@ int main(int argc, char* argv[]) {
         }
     }
     profileCreator();
-//////////////////////////
-    stringstream s, ss, sss;
-    s.str(feed[1].getText());
-    vector<string> words;
-    string shrinker;
-    s.ignore(5, '[');
 
-
-    while(s.good()) {
-        string pieces;
-        getline(s, pieces, ']');
-        words.push_back(pieces);
+    outer();
+    string mline;
+    if(!maddlibs.is_open()) {
+        cerr << "Could not find file." << endl;
+        exit(1);
+    } else if(maddlibs.good()) {
+        while(getline(maddlibs, mline)) {
+            output << "Madd-Libs" << endl;
+            madmagic(line);
     }
-    words.pop_back();
-    for(unsigned int i = 0; i < words.size(); i++) {
-        shrinker = words[i];
-        //cout << shrinker << endl;
-    }
-    words.clear();
-    ss.str(shrinker);
-
-    while(ss.good()) {
-        string pieces;
-        getline(ss, pieces, ')');
-        words.push_back(pieces);
-    }
-    shrinker = "";
-    for(unsigned int i = 0; i < words.size(); i++) {
-        shrinker = shrinker + words[i];
     }
 
-    words.clear();
-    sss.str(shrinker);
 
-    while(sss.good()) {
-        string pieces;
-        getline(sss, pieces, '(');
-        words.push_back(pieces);
-    }
-    shrinker = "";
-    for(unsigned int i = 0; i < words.size(); i++) {
-        shrinker = shrinker + words[i];
-    }
-    cout << shrinker << endl;
-
-///////////////////////////////////
+    maddlibs.close();
     tweetfile.close();
+
+    output.close();
+
     return 0;
 }
 
@@ -152,4 +139,87 @@ void fileReading(string l) {
     target = w - '0';
 
     tweetScanner(id, user, text, target);
+    delete[]p;
 }
+
+void outer() {
+    output << "Maddlibs\n" << endl;
+
+    output << "Statistics:\n" << endl;
+    output << "Total Tweets: " << tweetCounter << endl;
+    output << "Total Positive Tweets: " << posCounter << endl;
+    output << "Total Negative Tweets: " << negCounter << endl << endl;
+    output << "Average Number of Words for Positive Tweets: " << average(1) << endl;
+    output << "Average Number of Words for Negative Tweets: " << average(0) << endl;
+
+
+}
+float average(bool b) {
+    float participants = 0;
+    int pot = 0;
+    for(unsigned int i = 0; i < feed.size(); i++) {
+
+        if(feed.at(i).status() == b) {
+            participants++;
+            pot += feed.at(i).wc();
+        } else { continue; }
+    }
+    float avg = pot/participants;
+    return avg;
+}
+
+
+void madmagic(string s) {
+    stringstream ms, ls, ss;
+    ls.str(s);
+    srand(time(NULL));
+    int rng;
+
+    string z;
+    string mcopy;
+    vector<string> msl;
+    vector<string> choice;
+    vector<string> wtype;
+    vector<string> ans;
+
+    ms.str(s);
+    while(ms.good()) {
+        getline(ms, mcopy);
+        msl.push_back(mcopy);
+    }
+    while(ls.good()) {
+        string guy;
+        getline(ls, guy, ' ');
+        choice.push_back(guy);
+    }
+    ss.str(s);
+    while(ss.good()) {
+        string partof;
+        ss.ignore(3000, '[');
+        getline(ss, partof, ']');
+        wtype.push_back(partof);
+    }
+
+    for(unsigned int i = 0; i < choice.size(); i++) {
+        for(unsigned int j = 0; j < people.size(); j++) {
+            if(choice[i] == people[j].getUser()) {
+                int r = people[j].totalTweets();
+                rng = rand()% r;
+                z = people[j].timeline[rng].filler(wtype[i]);
+                ans.push_back(z);
+            }
+
+        }
+
+    }
+
+    for(unsigned int i = 0; i < msl.size(); i++) {
+        int kk = msl[i].find('[');
+        int jj = msl[i].find(']');
+        int zz = jj-kk;
+
+        msl[i].replace(kk, zz, ans[i]);
+        output << msl[i] << endl;
+    }
+}
+
