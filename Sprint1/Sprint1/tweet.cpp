@@ -1,6 +1,7 @@
 #include "tweet.h"
 #include <iostream>
 #include <string>
+#include <tuple>
 
 using namespace std;
 
@@ -20,6 +21,7 @@ void Tweet::setUser(string a) {
     user = a;
 }
 string Tweet::getText() {
+
     return text;
 }
 void Tweet::setText(string a) {
