@@ -1,0 +1,55 @@
+Initial Thoughts, 9/12/2018
+-----------------------------------------------------------------------
+
+............input
+Basically create the back of a book.
+Entails ignoring useless words
+Keywords are given in the files, surrounded by brackets
+	Keyword will at most be 40 characters
+		*Maybe means that there will be a lot of get/getline
+
+	The end of the word list will be "<-1>"
+		*Page numbers are indicated with <n>, always individual lines
+		*Pages probably aren't in order
+		*Pages might be repeated (account for this)
+
+	Word case does not matter to the writer apparently
+	No line of text in the input file will exceed 80
+	Different forms of the same word are separate entries
+		"run": page number
+		"runs": other page number or something
+	
+............output
+Need both numbers and letters (how many times a key number and key word appear)
+
+Should look something like:
+
+	"[Index Key]"       (either key number or keyword-first letter in caps)
+	"keyword: page number, other page number" (ascending order)
+	...."extra page numbers"
+
+None of the lines should be longer than 50 characters
+Punctuation is also not while sorting em out, so
+
+............Prof. Jackson is a bit stupid
+Make own vector class using a "data structure" that can "grow"
+	Needs to use the template
+	Will need to allocate memory
+	"Grow as needed"
+	At minimum will need to add a new item to the container
+	Be able to access using [] (overload [])
+	Be able to remove elements
+	Use a LOT of try-catch blocks
+		Check the CATCH Framework Tutorial on the handout
+
+............Executions
+Two modes
+	Test Mode:
+		This mode will run the catch TDD tests (they should all pass)
+		Test mode is run by the "-t" command line arg
+	Run mode
+		Will run the autoindexer
+		"-r <input file name> <output file name>"
+
+Submit the project folder.  Add this to it
+
