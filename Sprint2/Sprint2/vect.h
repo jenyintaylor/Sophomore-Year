@@ -4,8 +4,6 @@
 //inc
 
 template <typename T>
-
-
 // Header Part
 class Vect {
 private:
@@ -16,7 +14,7 @@ private:
 
 public:
     Vect(const Vect<T>&src);
-    Vect(int initCap);
+    Vect(int initCap = 10);
     Vect& operator=(const Vect<T> &src);
     ~Vect();
 
@@ -38,11 +36,14 @@ public:
 
 template <typename T>
 Vect<T>::Vect(const Vect<T>&src) {
+
 }
 
 template <typename T>
-Vect<T>::Vect(int initCap = 10)
-    :capacity(initCap) {}
+Vect::Vect(int initCap)
+    :capacity(initCap) {
+    data = new T[capacity];
+}
 
 
 template <typename T>
