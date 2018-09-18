@@ -15,46 +15,59 @@ private:
 
 
 public:
-    Vect(const Vect<T>&);
-    Vect(int initSize = 10);
-    Vect& operator=(const Vect cT);
+    Vect(const Vect<T>&src);
+    Vect(int initCap);
+    Vect& operator=(const Vect<T> &src);
     ~Vect();
 
     T& operator[](int location);
     T& elementAt(int location);
-    void setElementAt(int location, T);
+    void setElementAt(int location, T obj);
 
-    void push(T);
-    void pushAt(T, int location);
+    void push(T obj);
+    void pushAt(T obj, int location);
     void pop();
     void popAt(int location);
     T& first();
     T& last();
+    int tot();
+    int cap();
+
 };
 
 
 template <typename T>
-Vect<T>::Vect(const Vect<T> &) {
-
+Vect<T>::Vect(const Vect<T>&src) {
 }
 
 template <typename T>
-Vect<T>::Vect(int initSize = 10) {
-    capacity = initSize;
-}
+Vect<T>::Vect(int initCap = 10)
+    :capacity(initCap) {}
+
 
 template <typename T>
-T& Vect<T>::operator=(const Vect cT) {
+Vect<T>::~Vect() {}
 
+template <typename T>
+Vect<T>& Vect<T>::operator=(const Vect<T> &src) {//https://en.cppreference.com/w/cpp/language/operators
+                                      // I got help here
+    if(this != &src) { //Makes sure these aren't the same
+        delete[] data;
+        size = src.tot();
+        capacity = src.cap();
+        data = nullptr;
+        data = new T[capacity];
+        for(int i = 0; i < size; i++) {
+            data[i] = src[i];
+        }
+    }
+    return *this;
 }
 
 template <typename T>
 T& Vect<T>::operator[](int location) {
-
+    return data[location];
 }
-
-template <typename T>
-Vect<T>::~Vect() {}
 
 
 template <typename T>
@@ -63,13 +76,27 @@ T& Vect<T>::elementAt(int location) {
 }
 
 template <typename T>
-void Vect<T>::push(T) {
+void Vect<T>::setElementAt(int location, T obj) {
 
+}
+
+template <typename T>
+void Vect<T>::push(T obj) {
+    if(size == capacity) {
+        T* temp = new T[capacity*2];
+        for(int i = 0; i < capacity; i++) {
+            temp[i] = data[i];
+        }
+        capacity *= 2;
+        delete[] data;
+        data = temp;
+    }
+    data[size++] = obj;
 }
 
 
 template <typename T>
-void Vect<T>::pushAt(T, int location) {
+void Vect<T>::pushAt(T obj, int location) {
 
 }
 
@@ -86,13 +113,26 @@ void Vect<T>::popAt(int location) {
 
 template <typename T>
 T& Vect<T>::first() {
-    return T[1];
+    return data[0];
 }
 
 template <typename T>
 T& Vect<T>::last() {
-    return T[size-1];
+    return data[size-1];
 }
+
+template <typename T>
+int Vect<T>::tot() {
+    return size;
+}
+
+template <typename T>
+int Vect<T>::cap() {
+    return capacity;
+}
+
+
+
 
 
 #endif // VECT_H
