@@ -28,6 +28,8 @@ public:
     void pushAt(T, int location);
     void pop();
     void popAt(int location);
+    T& first();
+    T& last();
 };
 
 
@@ -61,6 +63,12 @@ void Vect<T>::pop() {
 }
 void Vect<T>::popAt(int location) {
 
+}
+T& Vect<T>::first() {
+    return T[1];
+}
+T& Vect<T>::last() {
+    return T[size-1];
 }
 
 
