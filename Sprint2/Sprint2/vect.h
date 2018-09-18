@@ -33,40 +33,63 @@ public:
 };
 
 
+template <typename T>
 Vect<T>::Vect(const Vect<T> &) {
 
 }
+
+template <typename T>
 Vect<T>::Vect(int initSize = 10) {
     capacity = initSize;
 }
+
+template <typename T>
 T& Vect<T>::operator=(const Vect cT) {
 
 }
 
+template <typename T>
+T& Vect<T>::operator[](int location) {
 
+}
+
+template <typename T>
 Vect<T>::~Vect() {}
 
 
+template <typename T>
 T& Vect<T>::elementAt(int location) {
 
 }
 
-void Vect<T>::push(typename T) {
+template <typename T>
+void Vect<T>::push(T) {
 
 }
 
-void Vect<T>::pushAt(typename T, int location) {
+
+template <typename T>
+void Vect<T>::pushAt(T, int location) {
 
 }
+
+
+template <typename T>
 void Vect<T>::pop() {
 
 }
+
+template <typename T>
 void Vect<T>::popAt(int location) {
 
 }
+
+template <typename T>
 T& Vect<T>::first() {
     return T[1];
 }
+
+template <typename T>
 T& Vect<T>::last() {
     return T[size-1];
 }
