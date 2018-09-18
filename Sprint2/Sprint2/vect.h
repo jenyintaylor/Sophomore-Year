@@ -3,7 +3,7 @@
 
 //inc
 
-template <typename t>
+template <typename T>
 
 
 // Header Part
@@ -11,26 +11,57 @@ class Vect {
 private:
     int size;
     int capacity;
-    t* data;
+    T* data;
 
 
 public:
-    Vect(const Vect<t>&);
+    Vect(const Vect<T>&);
     Vect(int initSize = 10);
-    Vect& operator=(const Vect ct);
+    Vect& operator=(const Vect cT);
     ~Vect();
 
-    t operator[](int location);
-    t elementAt(int location);
-    void setElementAt(int location, t);
+    T& operator[](int location);
+    T& elementAt(int location);
+    void setElementAt(int location, T);
 
-    void push(t);
+    void push(T);
+    void pushAt(T, int location);
     void pop();
     void popAt(int location);
 };
 
 
+Vect<T>::Vect(const Vect<T> &) {
 
+}
+Vect<T>::Vect(int initSize = 10) {
+    capacity = initSize;
+}
+T& Vect<T>::operator=(const Vect cT) {
+
+}
+
+
+Vect<T>::~Vect() {}
+
+
+T& Vect<T>::elementAt(int location) {
+
+}
+
+void Vect<T>::push(typename T) {
+
+}
+
+void Vect<T>::pushAt(typename T, int location) {
+
+}
+void Vect<T>::pop() {
+
+}
+void Vect<T>::popAt(int location) {
+
+}
 
 
 #endif // VECT_H
