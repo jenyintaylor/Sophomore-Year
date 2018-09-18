@@ -40,8 +40,9 @@ Vect<T>::Vect(const Vect<T>&src) {
 }
 
 template <typename T>
-Vect::Vect(int initCap)
+Vect<T>::Vect(int initCap)
     :capacity(initCap) {
+
     data = new T[capacity];
 }
 
@@ -67,6 +68,7 @@ Vect<T>& Vect<T>::operator=(const Vect<T> &src) {//https://en.cppreference.com/w
 
 template <typename T>
 T& Vect<T>::operator[](int location) {
+
     return data[location];
 }
 
