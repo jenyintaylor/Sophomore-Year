@@ -2,6 +2,10 @@
 #define VECT_H
 
 //inc
+#include <iostream>
+#include <stdexcept>
+
+using namespace std;
 
 template <typename T>
 // Header Part
@@ -67,13 +71,15 @@ Vect<T>& Vect<T>::operator=(const Vect<T> &src) {//https://en.cppreference.com/w
 
 template <typename T>
 T& Vect<T>::operator[](int location) {
-    return data[location];
+    if(location < 0 || location > size)
+        throw out_of_range("Index is out of range");
+    return this->data[location];
 }
 
 
 template <typename T>
 T& Vect<T>::elementAt(int location) {
-    return data[location];
+    return this->data[location];
 }
 
 template <typename T>
@@ -90,8 +96,8 @@ void Vect<T>::push(T obj) {
         }
         capacity *= 2;
         delete[] data;
-        data = new T[capacity];
         data = temp;
+        delete[] temp;
         data[size] = obj;
         size++;
     }
@@ -110,6 +116,8 @@ void Vect<T>::pushAt(T obj, int location) {
 
 template <typename T>
 void Vect<T>::pop() {
+    delete data[size-1];
+    size = size -1;
 
 }
 
@@ -120,12 +128,12 @@ void Vect<T>::popAt(int location) {
 
 template <typename T>
 T& Vect<T>::first() {
-    return data[0];
+    return this->data[0];
 }
 
 template <typename T>
 T& Vect<T>::last() {
-    return data[size-1];
+    return this->data[size-1];
 }
 
 template <typename T>
