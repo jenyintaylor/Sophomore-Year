@@ -68,3 +68,13 @@ Submit the project folder.  Add this to it
 Captain's Log, 9/17/2018
 -----------------------------------------------------------------------
 Virtual Box has been running smoothly for way too long.  Out of paranoia and due to my basic understanding of Murphy's Law, this is the time to aggressively commit and push.
+
+-----------------------------------------------------------------------
+Command Line, 9/20/2018
+-----------------------------------------------------------------------
+it's either:
+		-r input.txt output.txt
+
+	or
+
+		-t

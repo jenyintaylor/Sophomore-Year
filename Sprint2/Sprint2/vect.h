@@ -26,7 +26,7 @@ public:
     T& elementAt(int location);
     void setElementAt(int location, T obj);
 
-    void push(T obj);
+    void push(const T obj);
     void pushAt(T obj, int location);
     void pop();
     void popAt(int location);
@@ -88,7 +88,7 @@ void Vect<T>::setElementAt(int location, T obj) {
 }
 
 template <typename T>
-void Vect<T>::push(T obj) {
+void Vect<T>::push(const T obj) {
     if(size == capacity) {
         T* temp = new T[capacity*2];
         for(int i = 0; i < capacity; i++) {
@@ -118,7 +118,6 @@ template <typename T>
 void Vect<T>::pop() {
     delete data[size-1];
     size = size -1;
-
 }
 
 template <typename T>
