@@ -14,7 +14,7 @@ private:
 
 public:
     Vect(const Vect<T>&src);
-    Vect(int initCap = 10);
+    Vect(int initCap = 1);
     Vect& operator=(const Vect<T> &src);
     ~Vect();
 
@@ -32,7 +32,8 @@ public:
     int cap();
 
 };
-
+#endif
+#ifdef VECT_H
 
 template <typename T>
 Vect<T>::Vect(const Vect<T>&src) {
@@ -68,14 +69,13 @@ Vect<T>& Vect<T>::operator=(const Vect<T> &src) {//https://en.cppreference.com/w
 
 template <typename T>
 T& Vect<T>::operator[](int location) {
-
     return data[location];
 }
 
 
 template <typename T>
 T& Vect<T>::elementAt(int location) {
-
+    return data[location];
 }
 
 template <typename T>
@@ -93,8 +93,13 @@ void Vect<T>::push(T obj) {
         capacity *= 2;
         delete[] data;
         data = temp;
+        data[size++] = obj;
     }
-    data[size++] = obj;
+    else {
+        data[size] = obj;
+
+    }
+    size++;
 }
 
 
@@ -133,8 +138,6 @@ template <typename T>
 int Vect<T>::cap() {
     return capacity;
 }
-
-
 
 
 
