@@ -14,6 +14,8 @@ void create() {
 
 TEST_CASE("Vector has a beginning") {
     REQUIRE(leedle.first() == 5);
+    REQUIRE(leedle[0] == 0);
+    REQUIRE(leedle.elementAt(0) == 5);
 }
 TEST_CASE("Vector has an end") {
     REQUIRE(leedle[4] == 45);

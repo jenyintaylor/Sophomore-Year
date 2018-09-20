@@ -79,6 +79,8 @@ T& Vect<T>::operator[](int location) {
 
 template <typename T>
 T& Vect<T>::elementAt(int location) {
+    if(location < 0 || location > size)
+        throw out_of_range("Index is out of range");
     return this->data[location];
 }
 
