@@ -42,9 +42,7 @@ Vect<T>::Vect(const Vect<T>&src) {
 
 template <typename T>
 Vect<T>::Vect(int initCap)
-    //:capacity(initCap)
-{
-    capacity = initCap;
+    :capacity(initCap) {
     data = new T[capacity];
 }
 
@@ -55,7 +53,7 @@ Vect<T>::~Vect() {}
 template <typename T>
 Vect<T>& Vect<T>::operator=(const Vect<T> &src) {//https://en.cppreference.com/w/cpp/language/operators
                                       // I got help here
-    if(this != &src) { //Makes sure these aren't the same
+    if(*this != &src) { //Makes sure these aren't the same
         delete[] data;
         size = src.tot();
         capacity = src.cap();
@@ -93,13 +91,13 @@ void Vect<T>::push(T obj) {
         }
         capacity *= 2;
         delete[] data;
+        data = new T[capacity];
         data = temp;
-        data[size++] = obj;
+        delete[] temp;
+        data[++size] = obj;
     }
     else {
-        data[size] = obj;
-        size++;
-
+        data[size++] = obj;
     }
 }
 
