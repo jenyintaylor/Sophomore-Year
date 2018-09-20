@@ -17,4 +17,6 @@ int main(int argc, char* argv[])
         leedle.push(j);
         cout << leedle[i] << endl;
     }
+
+    return 0;
 }

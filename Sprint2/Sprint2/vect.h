@@ -14,7 +14,7 @@ private:
 
 public:
     Vect(const Vect<T>&src);
-    Vect(int initCap = 1);
+    Vect(int initCap = 20);
     Vect& operator=(const Vect<T> &src);
     ~Vect();
 
@@ -32,8 +32,8 @@ public:
     int cap();
 
 };
-#endif
-#ifdef VECT_H
+
+
 
 template <typename T>
 Vect<T>::Vect(const Vect<T>&src) {
@@ -42,8 +42,9 @@ Vect<T>::Vect(const Vect<T>&src) {
 
 template <typename T>
 Vect<T>::Vect(int initCap)
-    :capacity(initCap) {
-
+    //:capacity(initCap)
+{
+    capacity = initCap;
     data = new T[capacity];
 }
 
@@ -97,9 +98,9 @@ void Vect<T>::push(T obj) {
     }
     else {
         data[size] = obj;
+        size++;
 
     }
-    size++;
 }
 
 
