@@ -1,4 +1,4 @@
-#define CATCH_CONFIG_RUNNER
+//#define CATCH_CONFIG_RUNNER
 #include "catch.hpp"
 #include "vect.h"
 #include <iostream>
@@ -10,19 +10,33 @@
 
 using namespace std;
 
-void runner();
+void runner(char* input);
+void fileReader(string s);
 
 int main(int argc, char* argv[]) {
 
     if(strcmp(argv[1], "-t") == 0) {
         Catch::Session().run();
     } else if(strcmp(argv[1], "-r") == 0) {
-        runner();
+        runner(argv[2]);
     }
 
     return (0);
 }
 
-void runner() {
+void runner(char* input) {
+    ifstream f;
+    string lines;
+    f.open(input);
+    while(f.good()) {
+        while(getline(f, lines)) {
+            fileReader(lines); //chkpnt
+        }
+    }
+
+
+}
+
+void fileReader(string s) {
 
 }

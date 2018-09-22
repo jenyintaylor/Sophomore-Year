@@ -78,3 +78,12 @@ it's either:
 	or
 
 		-t
+
+
+
+-----------------------------------------------------------------------
+Progress, 9/21/2018
+-----------------------------------------------------------------------
+I could probably finish it tonight, but based on how deeply I've been sleeping (according to those around me), I'm likely sleep deprived and in need of rest.  To add insult to injury, I need to be up early.  I'll probably just try to read the file and I'll see about making the output tomorrow.  This will be a lot of get and getline from sstream and fstream respectively.
+
+

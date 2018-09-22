@@ -17,8 +17,8 @@ private:
 
 
 public:
-    Vect(const Vect<T>&src);
     Vect(int initCap = 10, int initSize = 0);
+    Vect(const Vect<T>&src);
     Vect& operator=(const Vect<T> &src);
     ~Vect();
 
@@ -38,15 +38,21 @@ public:
 };
 
 
+//the working bits
 
-template <typename T>
-Vect<T>::Vect(const Vect<T>&src) {
-}
-
+//default with the default values for inital size and cap
 template <typename T>
 Vect<T>::Vect(int initCap, int initSize)
     :capacity(initCap), size(initSize) {
     data = new T[capacity];
+}
+
+//copy constructor
+template <typename T>
+Vect<T>::Vect(const Vect<T>&src) {
+    data = src.data;
+    size = src.size;
+    capacity = src.capacity;
 }
 
 
