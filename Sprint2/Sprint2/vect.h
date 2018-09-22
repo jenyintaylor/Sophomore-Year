@@ -61,7 +61,7 @@ Vect<T>::~Vect() {}
 
 template <typename T>
 Vect<T>& Vect<T>::operator=(const Vect<T> &src) {//https://en.cppreference.com/w/cpp/language/operators
-                                      // I got help here
+                                      // I got help here, and then we went over the exact thing in class
     if(*this != &src) { //Makes sure these aren't the same
         delete[] data;
         size = src.tot();

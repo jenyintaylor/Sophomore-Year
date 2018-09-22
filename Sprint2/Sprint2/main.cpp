@@ -1,4 +1,4 @@
-//#define CATCH_CONFIG_RUNNER
+#define CATCH_CONFIG_RUNNER
 #include "catch.hpp"
 #include "vect.h"
 #include <iostream>
@@ -34,9 +34,22 @@ void runner(char* input) {
         }
     }
 
-
+    f.close();
 }
 
 void fileReader(string s) {
+    cout << s << endl;
 
+    string holder;
+    stringstream sol;
+    sol.str(s);
+
+
+    if(s.front() == '<') {
+        sol.get(holder, 80, '>');
+    }
+
+
+
+    sol.close();
 }
