@@ -24,11 +24,11 @@ void runner(char* input);
 void fileReader(string s);
 void organizer();
 void directory(string s);
+void fileWriter(char* output);
 
 //global variables
 Vect<string> pholds;
 Vect<string> real;
-Vect<char> indie;
 Vect<char> categ;
 int pagecounter = 0;
 int phrasecounter = 0;
@@ -41,6 +41,7 @@ int main(int argc, char* argv[]) {
         Catch::Session().run();
     } else if(strcmp(argv[1], "-r") == 0) {
         runner(argv[2]);
+        fileWriter(argv[3]);
     }
 
     return (0);
@@ -111,6 +112,16 @@ void organizer() {
     }
     delete[] d;
     //Now I have the little header things
+    l = pholds.tot();
+    string* c = new string[l];
+    for(int i = 0; i < l; i++) {
+        c[i] = pholds[i];
+    }
+    sort(c, c+l);
+    for(int i = 0; i < l; i++) {
+        pholds[i] = c[i];
+    }
+    delete[] c;
 
 }
 
@@ -128,10 +139,37 @@ void directory(string s) {
         int dist = seeker2 - seeker1;
         bit = s.substr(seeker1, dist);
         seeker1 = s.find_first_of("<", seeker1+1);
-        cout << bit << endl;
+        real.push(bit);
+    }
+
+}
+
+void fileWriter(char *output) {
+    ofstream f;
+    f.open(output);
+
+    // Rollercoaster Tycoon here.  More loops than any coaster
+
+    f << "[" << categ[0] << "]" << endl;
+    for(int i = 1; i < categ.tot(); i++) {
+        if(categ[i] != categ[i-1]) {
+            f << "[" << categ[i] << "]" << endl;
+            for(int j = 0; j < pholds.tot(); j++) {
+                char t = toupper(pholds[j].front());
+                if(t == categ[i]) {
+
+                }
+            }
+
+        } else {
+            continue;
+        }
     }
 
 
+
+
+    f.close();
 }
 
 
