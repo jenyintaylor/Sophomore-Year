@@ -36,7 +36,7 @@ int main(int argc, char* argv[]) {
     }
 
     return (0);
-}
+} //main is just command line args and what they do
 
 void runner(char* input) {
     ifstream f;
@@ -44,13 +44,13 @@ void runner(char* input) {
     f.open(input);
     while(f.good()) {
         while(getline(f, lines)) {
-            fileReader(lines); //chkpnt
+            fileReader(lines);
         }
     }
     f.close();
 
     organizer();
-}
+} //what happens when -r is the argument
 
 void fileReader(string s) {
 
@@ -74,9 +74,11 @@ void fileReader(string s) {
     }
 
     if(holder != "")
-        pholds.push(h);
+        pholds.push(holder);
 }
 
 void organizer() {
-
+    for(int i = 0; i < pholds.tot(); i++) {
+        cout << pholds[i] << endl;
+    }
 }

@@ -1,8 +1,14 @@
+//Jeffrey Taylor, 47400760, Sprint2
+
+
+//inc
 #include "vect.h"
 #include "catch.hpp"
 
+//global variable
 Vect<int> leedle;
 
+//function
 void create() {
     for(int i = 0; i < 5; i++) {
         int j =(i*10)+5;
@@ -10,6 +16,7 @@ void create() {
     }
 }
 
+//Vect tests
 TEST_CASE("Custom Vector Cases") {
 
     create();

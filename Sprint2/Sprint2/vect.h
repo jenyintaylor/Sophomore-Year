@@ -1,3 +1,7 @@
+//Jeffrey Taylor, 47400760, Sprint2
+
+
+//def
 #ifndef VECT_H
 #define VECT_H
 
@@ -157,7 +161,7 @@ int Vect<T>::cap() {
 template <typename T>
 void Vect<T>::resize(int r) {
     if(r < size)
-        throw length_error("You are attempting to shrink the array without deleting elements");
+        throw length_error("You are attempting to shrink the vector without deleting elements");
     else {
         capacity = r;
     }
