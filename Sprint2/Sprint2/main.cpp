@@ -38,18 +38,28 @@ void runner(char* input) {
 }
 
 void fileReader(string s) {
-    cout << s << endl;
 
     string holder;
-    stringstream sol;
+    int pstart, pend;
+    istringstream sol;
     sol.str(s);
 
-
     if(s.front() == '<') {
-        sol.get(holder, 80, '>');
+        sol.ignore(1);
+        getline(sol, holder, '>');
+
+    } else {
+        pstart = s.find('[') + 1;
+        pend = s.find(']');
+
+        //basically just the copy function of string
+        for(int i = pstart; i < pend; i++) {
+            holder += s[i];
+        }
     }
+    if(holder == "")
+        cout << "Useless line" << endl;
+    else
+        cout << holder << endl;
 
-
-
-    sol.close();
 }

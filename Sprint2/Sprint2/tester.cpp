@@ -24,5 +24,22 @@ TEST_CASE("Custom Vector Cases") {
         REQUIRE(leedle.elementAt(4) == 45);
         REQUIRE(leedle.last() == 45);
     }
+    SECTION("Vector elementAt function works") {
+        REQUIRE(leedle.elementAt(0) == leedle[0]);
+        REQUIRE(leedle.elementAt(1) == leedle[1]);
+        REQUIRE(leedle.elementAt(2) == leedle[2]);
+        REQUIRE(leedle.elementAt(3) == leedle[3]);
+        REQUIRE(leedle.elementAt(4) == leedle[4]);
+    }
+    SECTION("Capacity and resize functions work") {
+        REQUIRE(leedle.cap() == 10);
+        leedle.resize(5);
+        REQUIRE(leedle.cap() == 10);
+        leedle.resize(15);
+        REQUIRE(leedle.cap() == 15);
+    }
+    SECTION("Total elements function works") {
+        REQUIRE(leedle.tot() == 5);
+    }
 
 }

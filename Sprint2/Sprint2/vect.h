@@ -11,8 +11,8 @@ template <typename T>
 // Header Part
 class Vect {
 private:
-    int size;
     int capacity;
+    int size;
     T* data;
 
 
@@ -34,6 +34,7 @@ public:
     T& last();
     int tot();
     int cap();
+    void resize(int r);
 
 };
 
@@ -92,7 +93,7 @@ T& Vect<T>::elementAt(int location) {
 
 template <typename T>
 void Vect<T>::setElementAt(int location, T obj) {
-
+    data[location] = obj;
 }
 
 template <typename T>
@@ -151,6 +152,15 @@ int Vect<T>::tot() {
 template <typename T>
 int Vect<T>::cap() {
     return capacity;
+}
+
+template <typename T>
+void Vect<T>::resize(int r) {
+    if(r < size)
+        throw length_error("You are attempting to shrink the array without deleting elements");
+    else {
+        capacity = r;
+    }
 }
 
 

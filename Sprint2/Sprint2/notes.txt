@@ -87,3 +87,13 @@ Progress, 9/21/2018
 I could probably finish it tonight, but based on how deeply I've been sleeping (according to those around me), I'm likely sleep deprived and in need of rest.  To add insult to injury, I need to be up early.  I'll probably just try to read the file and I'll see about making the output tomorrow.  This will be a lot of get and getline from sstream and fstream respectively.
 
 
+-----------------------------------------------------------------------
+Ideas, 9/23/2018
+-----------------------------------------------------------------------
+Turns out that not sleeping for about a week will make my weekend naps become 7 hours of daytime-sleeping. So I guess I'm nocturnal now since it's the middle of the night and I feel well rested.
+
+Realized that the string class is actually pretty amazing.  Based on the nature of the index, and on what the assignment asks for, the page numbers don't actually need to be ints.  With that in mind, I can just make a vect for the first characters of each entry (like an index), but then everything following can just be strings.
+
+
+
+
