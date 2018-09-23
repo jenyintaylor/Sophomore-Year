@@ -1,0 +1,5 @@
+Index for 'Advanced Data Structure Implementation and Analysis'
+[L]
+Lorem ipsum: 4 
+[S]
+sentence-based capitalization: 2 

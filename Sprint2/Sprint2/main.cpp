@@ -127,7 +127,6 @@ void organizer() {
 
 void directory(string s) {
 
-    cout << s << endl;
     string bit;
     int ender = s.find("<-1>");
     int seeker1 = s.find_first_of("<");
@@ -148,21 +147,29 @@ void fileWriter(char *output) {
     ofstream f;
     f.open(output);
 
-    // Rollercoaster Tycoon here.  More loops than any coaster
+    // Enough loops to crash Rollercoaster Tycoon
 
-    f << "[" << categ[0] << "]" << endl;
-    for(int i = 1; i < categ.tot(); i++) {
+    f << "Index for 'Advanced Data Structure Implementation and Analysis'";
+    for(int i = 1; i <= categ.tot(); i++) {
         if(categ[i] != categ[i-1]) {
-            f << "[" << categ[i] << "]" << endl;
+            f << endl << "[" << categ[i-1] << "]" << endl;
             for(int j = 0; j < pholds.tot(); j++) {
                 char t = toupper(pholds[j].front());
-                if(t == categ[i]) {
-
+                if(t == categ[i-1]) {
+                    f << pholds[j] << ": ";
+                    for(int k = 0; k < real.tot(); k++) {
+                        size_t exist = real[k].find(pholds[j]);
+                        if(exist != string::npos) {
+                            int numh1 = real[k].find("<") + 1;
+                            int numh2 = real[k].find(">");
+                            int dist = numh2 - numh1;
+                            string subber = real[k].substr(numh1, dist);
+                            f << subber << " ";
+                        } //This worked on the first try.  Satisfaction does not begin to describe how relieving this was
+                    }
                 }
             }
 
-        } else {
-            continue;
         }
     }
 
