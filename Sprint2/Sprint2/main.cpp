@@ -1,4 +1,10 @@
+//Jeffrey Taylor, 47400760, Sprint2
+
+
+//def
 #define CATCH_CONFIG_RUNNER
+
+//inc
 #include "catch.hpp"
 #include "vect.h"
 #include <iostream>
@@ -10,9 +16,17 @@
 
 using namespace std;
 
+
+//prototypes
 void runner(char* input);
 void fileReader(string s);
+void organizer();
 
+//global variables
+Vect<string> pholds;
+
+
+//functions
 int main(int argc, char* argv[]) {
 
     if(strcmp(argv[1], "-t") == 0) {
@@ -33,8 +47,9 @@ void runner(char* input) {
             fileReader(lines); //chkpnt
         }
     }
-
     f.close();
+
+    organizer();
 }
 
 void fileReader(string s) {
@@ -57,9 +72,11 @@ void fileReader(string s) {
             holder += s[i];
         }
     }
-    if(holder == "")
-        cout << "Useless line" << endl;
-    else
-        cout << holder << endl;
+
+    if(holder != "")
+        pholds.push(h);
+}
+
+void organizer() {
 
 }
