@@ -10,6 +10,7 @@
 #include <iostream>
 #include <stdexcept>
 #include <cstdlib>
+#include <algorithm>
 #include <string>
 #include <cstring>
 #include <fstream>
@@ -22,9 +23,15 @@ using namespace std;
 void runner(char* input);
 void fileReader(string s);
 void organizer();
+void directory(string s);
 
 //global variables
 Vect<string> pholds;
+Vect<string> real;
+Vect<char> indie;
+Vect<char> categ;
+int pagecounter = 0;
+int phrasecounter = 0;
 
 
 //functions
@@ -61,7 +68,8 @@ void fileReader(string s) {
     sol.str(s);
 
     if(s.front() == '<') {
-        getline(sol, holder);
+        getline(sol, holder, '>');
+        pagecounter++;
 
     } else {
         pstart = s.find('[') + 1;
@@ -71,6 +79,9 @@ void fileReader(string s) {
         for(int i = pstart; i < pend; i++) {
             holder += s[i];
         }
+        if(pstart > 0)
+            phrasecounter++;
+
     }
 
     if(holder != "")
@@ -78,21 +89,39 @@ void fileReader(string s) {
 }
 
 void organizer() {
-    int q = pholds.tot();
-
-    //int* pages = new int[q];
-    char* ind = new char[q];
-    string ss, ns;
-    for(int i = 0; i < q; i++) {
-            if(pholds[i].front() != '<') {
-
-            ind[i] = toupper(pholds[i].front());
-            cout << ind[i] << endl;
-            }
-
+    string ss;
+    for(int i = 0; i < pholds.tot(); i++) {
+        if(pholds[i].front() != '<') {
+            char t = toupper(pholds[i].front());
+            categ.push(t);
+        }
         ss += pholds[i];
     }
-    cout << ss << endl;
-    //delete[] pages;
-    delete[] ind;
+
+    directory(ss);
+
+    int l = categ.tot();
+    char* d = new char[l];
+    for(int i = 0; i < l; i++) {
+        d[i] = categ[i];
+    }
+    sort(d, d+l);
+    for(int i = 0; i < l; i++) {
+        categ[i] = d[i];
+    }
+    delete[] d;
+    //Now I have the little header things
+
 }
+
+void directory(string s) {
+
+    cout << s << endl;
+    int ender = s.find("<-1");
+    for(int i = 0; i < ender; i++) {
+
+    }
+
+}
+
+
