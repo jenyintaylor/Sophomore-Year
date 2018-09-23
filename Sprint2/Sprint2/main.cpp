@@ -80,17 +80,21 @@ void fileReader(string s) {
 
 void organizer() {
     int q = pholds.tot();
+
     int* pages = new int[q];
     char* ind = new char[q];
+    string ss;
     for(int i = 0; i < q; i++) {
         try {
             pages[i] = stoi(pholds[i]);
             cout << pages[i] << endl;
         } catch(exception &e) {
-            ind[i] = pholds[i].front();
+            ind[i] = toupper(pholds[i].front());
             cout << ind[i] << endl;
         }
+        ss += pholds[i];
     }
+    cout << ss << endl;
     delete[] pages;
     delete[] ind;
 }
