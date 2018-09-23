@@ -8,6 +8,7 @@
 #include "catch.hpp"
 #include "vect.h"
 #include <iostream>
+#include <stdexcept>
 #include <cstdlib>
 #include <string>
 #include <cstring>
@@ -78,7 +79,18 @@ void fileReader(string s) {
 }
 
 void organizer() {
-    for(int i = 0; i < pholds.tot(); i++) {
-        cout << pholds[i] << endl;
+    int q = pholds.tot();
+    int* pages = new int[q];
+    char* ind = new char[q];
+    for(int i = 0; i < q; i++) {
+        try {
+            pages[i] = stoi(pholds[i]);
+            cout << pages[i] << endl;
+        } catch(exception &e) {
+            ind[i] = pholds[i].front();
+            cout << ind[i] << endl;
+        }
     }
+    delete[] pages;
+    delete[] ind;
 }
