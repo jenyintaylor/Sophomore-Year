@@ -68,7 +68,7 @@ void fileReader(string s) {
     sol.str(s);
 
     if(s.front() == '<') {
-        getline(sol, holder, '>');
+        getline(sol, holder);
         pagecounter++;
 
     } else {
@@ -117,10 +117,20 @@ void organizer() {
 void directory(string s) {
 
     cout << s << endl;
-    int ender = s.find("<-1");
-    for(int i = 0; i < ender; i++) {
+    string bit;
+    int ender = s.find("<-1>");
+    int seeker1 = s.find_first_of("<");
+    int seeker2 = s.find_first_of(">");
 
+    while(seeker2 != ender) {
+        seeker2 = s.find_first_of("<", seeker2+1);
+
+        int dist = seeker2 - seeker1;
+        bit = s.substr(seeker1, dist);
+        seeker1 = s.find_first_of("<", seeker1+1);
+        cout << bit << endl;
     }
+
 
 }
 
