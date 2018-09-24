@@ -5,21 +5,22 @@
 #include "vect.h"
 #include "catch.hpp"
 
-//global variable
 Vect<int> leedle;
-
-//function
-void create() {
-    for(int i = 0; i < 5; i++) {
-        int j =(i*10)+5;
-        leedle.push(j);
-    }
-}
 
 //Vect tests
 TEST_CASE("Custom Vector Cases") {
 
-    create();
+
+
+    for(int i = 0; i < 5; i++) {
+        int j =(i*10)+5;
+        leedle.push(j); //I think this is a sign that this works
+    }
+//    REQUIRE(leedle.tot() == 5);
+
+//    REQUIRE(leedle.cap() == 10);
+    //I played with this for about an hour with the debugger; having the REQUIRE function was changing private values in Vect
+    //Also I was getting different numbers of passed tests every few minutes
 
     SECTION("Vector has a beginning") {
         REQUIRE(leedle.first() == 5);
@@ -38,15 +39,23 @@ TEST_CASE("Custom Vector Cases") {
         REQUIRE(leedle.elementAt(3) == leedle[3]);
         REQUIRE(leedle.elementAt(4) == leedle[4]);
     }
-    SECTION("Capacity and resize functions work") {
+    SECTION("Can remove elements") {
+        leedle.pop();
+        REQUIRE(leedle.tot() == 4);
+        leedle.push(45);
+        REQUIRE(leedle.tot() == 5);
+        leedle.popAt(4);
+        REQUIRE(leedle.tot() == 4);
+    }
+    SECTION("Size-based functions work") {
         REQUIRE(leedle.cap() == 10);
         leedle.resize(5);
         REQUIRE(leedle.cap() == 10);
         leedle.resize(15);
         REQUIRE(leedle.cap() == 15);
-    }
-    SECTION("Total elements function works") {
         REQUIRE(leedle.tot() == 5);
     }
+
+
 
 }

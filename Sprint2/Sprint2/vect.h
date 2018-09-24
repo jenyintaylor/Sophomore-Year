@@ -123,19 +123,69 @@ void Vect<T>::push(const T obj) {
 
 template <typename T>
 void Vect<T>::pushAt(T obj, int location) {
+    if(size == capacity) {
+        T* temp = new T[capacity*2];
+        for(int i = 0; i < location; i++) {
+            temp[i] = data[i];
+        }
+        temp[location] = obj;
+        capacity++;
+        size++;
+        for(int i = location+1; i < capacity; i++) {
+            temp[i] = data[i-1];
+        }
+        capacity *= 2;
+        delete[] data;
+        data = temp;
+        delete[] temp;
 
+    }
+    else {
+        T* temp = new T[capacity];
+        for(int i = 0; i < location; i++) {
+            temp[i] = data[i];
+        }
+        temp[location] = obj;
+        capacity++;
+        size++;
+        for(int i = location+1; i < size; i++) {
+            temp[i] = data[i-1];
+        }
+        delete[] data;
+        data = temp;
+        delete[] temp;
+    }
 }
 
 
 template <typename T>
 void Vect<T>::pop() {
-    delete data[size-1];
-    size = size -1;
+    size = size-1;
+    T* temp = new T[capacity];
+    for(int i = 0; i < size; i++) {
+        temp[i] = data[i];
+    }
+
+    delete[] data;
+    data = temp;
+    delete[] temp;
 }
 
 template <typename T>
 void Vect<T>::popAt(int location) {
+    if(location != size-1) {
+        T* temp = new T[capacity];
+        for(int i = 0; i < size; i++) {
+            if(i != location) {
+                temp[i] = data[i];
+            } else { continue; }
+        }
+        size--;
+        delete[] data;
+        data = temp;
+        delete[] temp;
 
+    } else { pop(); }
 }
 
 template <typename T>
