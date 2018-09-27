@@ -39,6 +39,7 @@ public:
     int tot();
     int cap();
     void resize(int r);
+    void lazySort();
 
 };
 
@@ -216,6 +217,11 @@ void Vect<T>::resize(int r) {
         capacity = r;
     }
 }
+
+template <typename T>
+void lazySort() {
+
+} //Not using this here, but I know for a fact that being able to sort will come in handy in the future and I'm lazy
 
 
 
