@@ -26,7 +26,8 @@ int main(int argc, char* argv[])
 void reader(char* file) {
     ifstream f(file);
 
-    while(!f.eof()) {
+
+    //the magic happens here
         int* imps = new int[2];
         int l, p;
 
@@ -52,12 +53,11 @@ void reader(char* file) {
             string s;
             getline(f,s);
             thing.push(s);
-            cout << thing.tot() << endl;
-
         }
+        cout << thing.tot() << endl;
         printer(p);
 
-    }
+
     f.close();
 }
 

@@ -215,6 +215,14 @@ void Vect<T>::resize(int r) {
         throw length_error("You are attempting to shrink the vector without deleting elements");
     else {
         capacity = r;
+        T* temp = new T[capacity];
+        for(int i = 0; i < size; i++) {
+            temp[i] = data[i];
+        }
+        delete[] data;
+        data = temp;
+        delete[] temp;
+
     }
 }
 
