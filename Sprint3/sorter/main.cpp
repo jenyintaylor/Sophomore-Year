@@ -14,6 +14,7 @@ Vect<string> thing;
 
 //prots
 void reader(char *file);
+void sorter();
 void printer(int d);
 
 //functs
@@ -43,10 +44,10 @@ void reader(char* file) {
         l = imps[0];
         p = imps[1];
         delete[] imps;
-        cout << l << endl;
+        cout << l << endl; //******************
 
         thing.resize(l);
-        cout << thing.cap() << endl;
+        cout << thing.cap() << endl; //*******
 
         //adding words
         for(int i = 0; i < l; i++) {
@@ -54,11 +55,32 @@ void reader(char* file) {
             getline(f,s);
             thing.push(s);
         }
-        cout << thing.tot() << endl;
+        cout << thing.tot() << endl; //******
+        sorter();
         printer(p);
 
 
     f.close();
+}
+
+void sorter() {
+    //Here, the program "elegantly" sorts whatever is in the vector
+    int t = thing.tot();
+    string* s = new string[t];
+
+    for(int i = 0; i < t; i++) {
+        s[i] = thing[i];
+    }
+    string f = s[0];
+    string l = s[t-1];
+    string m = s[t/2];
+    int fp, lp, mp;
+    fp = f.find('\0');
+    lp = l.find('\0');
+    mp = m.find('\0');
+    for(int i = 0; i < t; i++) {
+    }
+
 }
 
 void printer(int d) {

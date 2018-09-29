@@ -1,4 +1,6 @@
 //Jeffrey Taylor, 47400760, Sprint3
+    //Contains the evolution of the Jefe-Vector
+    //my resize function is no longer trash
 
 
 //def
@@ -230,7 +232,7 @@ template <typename T>
 void lazySort() {
 
 } //Not using this here, but I know for a fact that being able to sort will come in handy in the future and I'm lazy
-
+  //This will probably contain the finished result
 
 
 #endif // VECT_H
