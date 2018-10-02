@@ -79,7 +79,7 @@ void sorter() {
             snul = sf;
             slongest = thing[i];
         }
-        cout << slongest << endl;
+        //cout << slongest << endl;
     }
     delete[] s;
 }
