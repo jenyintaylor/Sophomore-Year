@@ -105,7 +105,7 @@ void Vect<T>::setElementAt(int location, T obj) {
 
 template <typename T>
 void Vect<T>::push(const T obj) {
-    if(size == capacity) {
+    if(size >= capacity) {
         T* temp = new T[capacity*2];
         for(int i = 0; i < capacity; i++) {
             temp[i] = data[i];
