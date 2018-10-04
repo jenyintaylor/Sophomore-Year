@@ -9,12 +9,11 @@
 using namespace std;
 
 //globs
-Vect<string> thing;
 
 
 //prots
 void reader(char *file);
-void sorter();
+void sorter(string *w, int t);
 void printer(int d);
 
 //functs
@@ -29,59 +28,64 @@ void reader(char* file) {
 
 
     //the magic happens here
-        int* imps = new int[2];
-        int l, p;
+    int* imps = new int[2];
+    int l, p;
 
-        //resizing
-        for(int i = 0; i < 2; i++) {
+    //resizing
+    for(int i = 0; i < 2; i++) {
         string s;
         int d;
         getline(f, s);
         d = stoi(s);
         imps[i] = d;
+    }
 
-        }
-        l = imps[0];
-        p = imps[1];
+    l = imps[0];
+    p = imps[1];
 
-        thing.resize(l);
+    string* words = new string[l];
 
-        //adding words
         for(int i = 0; i < l; i++) {
             string s;
-            getline(f,s);
-            thing.push(s);
-            cout << s << endl;
+            getline(f, s);
+            words[i] = s;
         }
-        sorter();
+
+//        thing.resize(l); //New idea, use array
+
+//        //adding words
+//        for(int i = 0; i < l; i++) {
+//            string s;
+//            getline(f,s);
+//            thing.push(s);
+//            cout << s << endl;
+//        }
+        sorter(words, l);
         printer(p);
 
         delete[] imps;
     f.close();
 }
 
-void sorter() {
+void sorter(string* w, int t) {
     //Here, the program "elegantly" sorts whatever is in the vector
-    int t = thing.tot();
-    string* s = new string[t];
 
-    for(int i = 0; i < t; i++) {
-        s[i] = thing[i];
-    }
+    string piv = w[t/2];
 
-    string slongest;
-    int snul = 0;
-
-    for(int i = 0; i < t; i++) {
-        int sf;
-        sf = thing[i].length();
-        if(sf > snul) {
-            snul = sf;
-            slongest = thing[i];
+    int i = 0;
+    int j = (t - 1);
+    while(i < j) {
+        while(w[i].length() >= piv.length()) {
+            swap(w[i], w[(t/2)-1]);
+            i++;
         }
-        //cout << slongest << endl;
+        while(w[j].length() >= piv.length()) {
+            j--;
+        }
     }
-    delete[] s;
+    for(int k = 0; k < t; k++) {
+        cout << w[k] << endl;
+    }
 }
 
 void printer(int d) {

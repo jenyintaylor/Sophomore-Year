@@ -118,7 +118,8 @@ void Vect<T>::push(const T obj) {
         size++;
     }
     else {
-        data[size++] = obj;
+        data[size] = obj;
+        size++;
     }
 }
 
