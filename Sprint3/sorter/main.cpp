@@ -13,7 +13,7 @@ using namespace std;
 
 //prots
 void reader(char *file);
-void sorter(string *w, int t);
+void sorter(string *w, int top, int bot);
 void printer(int d);
 
 //functs
@@ -29,7 +29,8 @@ void reader(char* file) {
 
     //the magic happens here
     int* imps = new int[2];
-    int l, p;
+    int l, p, o;
+    o = 0;
 
     //resizing
     for(int i = 0; i < 2; i++) {
@@ -60,30 +61,47 @@ void reader(char* file) {
 //            thing.push(s);
 //            cout << s << endl;
 //        }
-        sorter(words, l);
+        sorter(words, l, o);
         printer(p);
 
         delete[] imps;
     f.close();
 }
 
-void sorter(string* w, int t) {
+void sorter(string* w, int top, int bot) {
     //Here, the program "elegantly" sorts whatever is in the vector
 
-    string piv = w[t/2];
+    int pivnum = top/2;
+    int pivnuml = pivnum-1;
+    int pivnumh = pivnum+1;
+    string pivl = w[pivnuml];
+    string pivh = w[pivnumh];
+    unsigned int pivlenl = pivl.length();
+    unsigned int pivlenh = pivh.length();
 
-    int i = 0;
-    int j = (t - 1);
+    int i = bot;
+    int j = (top - 1);
     while(i < j) {
-        while(w[i].length() >= piv.length()) {
-            swap(w[i], w[(t/2)-1]);
-            i++;
+        while(i < pivnuml) {
+            if(w[i].length() < pivlenl) {
+                i++;
+            } else {
+                swap(w[i], pivl);
+                i++;
+            }
         }
-        while(w[j].length() >= piv.length()) {
-            j--;
+        while(j > pivnumh) {
+            if(w[j].length() > pivlenh) {
+                j--;
+            } else {
+                swap(w[j], pivh);
+                j--;
+            }
         }
     }
-    for(int k = 0; k < t; k++) {
+
+
+    for(int k = 0; k < top; k++) {
         cout << w[k] << endl;
     }
 }
@@ -127,4 +145,91 @@ void printer(int d) {
  *                  Navigate to the sprint file, do the
  *                  ll
  *
+ *
+ *10/4/2018
+ *      Ways to speed things up
+ *      Buckets:
+ *          A bunch of subdivided parts of your dataset.
+ *
+ *              Think:
+ *              A bunch of arrays pointing to other arrays (or like, one array of pointers that each point to an array of words which are the same length)
+ *
+ *      So have a bucket for each word length.
+ *      Then since you have alphabetization, they should be alphabetizing.
+ *      So you read the entire thing, then you bucket, then you sort by alphabetization
+ *
+ *
+ *      Radix sort
+ *          So let's say you are sorting with %10.  and you have a 48.  The 8 is the LSD (least significant index)
+ *          Then you order them based on remainders.
+ *          Then you do it again, but based on the element in the 10s position. (so %100)
+ *
+ *      It'll look something like:
+ *
+ *
+ *  func radix(vect<string> &bucket, int size) {
+ *
+ *      int numchars = bucket[0].length();
+ *      Vect<string> arr1(numchars);
+ *      Vect<string> arr2(numchars);
+ *
+ *          //for char[size-1]
+ *      for(i = 0; i < bucket.size(); i++) {
+ *          arr2[idxForChar(bucket[i][numchars-1]).push(bucket[i];
+ *      }
+ *      Vect<string> *srcArr, *destArr;
+ *      for(i = numchars - 1..0) {
+ *          if(i%2 == 0) {
+ *              srcArr = arr1;
+ *              destArr = arr2;
+ *          } else {
+ *              srcArr = arr2;
+ *              destArr = arr1;
+ *          }
+ *          for(j = 0; j < numchars; j++) {
+ *              destArr[j].reset();
+ *          }
+ *          for(j = 0; j < numchars; j++) {
+ *              for(k = 0; k < srcArr[j].size(); k++) {
+ *                  destArr[&srcArr[j][k][i]].push(srcArr[j][k]);
+ *              }
+ *          }
+ *      }
+ *  }
+ *  int idxForChar(char c) {
+ *      if( 'A' < = c && c <= 'Z')
+ *          return (c-'A');
+ *      else if('a' <= c && c <= 'z')
+ *          return (26 + c - 'a');
+ *  }
+ *
+ *
+ *
+ * --------------------------------------
+ * Ideas for the sorting alg that I can look back at later
+ *
+ * ..................................
+ *     while(i < j) {
+        if((j-i) <= 1) {
+            break;
+        } else if(i == pivnum) {
+            sorter(w, i, bot);
+        } else if(j == pivnum) {
+            sorter(w, top, j);
+        } else {
+            if(w[i].length() < pivlenl) {
+                i++;
+            } else {
+                swap(w[i], pivl);
+                i++;
+            }
+            if(w[j].length() > pivlenh) {
+                j--;
+            } else {
+                swap(w[j], pivh);
+                j--;
+            }
+        }
+    }
+    ...............................................
  */
