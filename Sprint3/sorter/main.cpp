@@ -9,29 +9,31 @@
 using namespace std;
 
 //globs
-
+int printedL;
 
 //prots
-void reader(char *file);
-void masterSorter(string *w, int top, int bot);
-void drudgeSorter(string* w, int top, int med, int bot);
-void printer(int d);
+void reader(char *file, char* fill);
+//void masterSorter(string *w, int top, int bot);
+//void drudgeSorter(string* w, int top, int med, int bot);
+void lazySort(string* w, int max, char* fill);
+int list(string b, int o, int cap);
+void printer(string *m, char *fill);
 
 //functs
 int main(int argc, char* argv[])
 {
-    reader(argv[1]);
+    reader(argv[1], argv[2]);
     return 0;
 }
 
-void reader(char* file) {
+void reader(char* file, char *fill) {
     ifstream f(file);
 
 
     //the magic happens here
     int* imps = new int[2];
-    int l, p, o;
-    o = 0;
+    int l, p;
+
 
     //resizing
     for(int i = 0; i < 2; i++) {
@@ -45,6 +47,7 @@ void reader(char* file) {
     l = imps[0];
     p = imps[1];
 
+    printedL = p;
     string* words = new string[l];
 
         for(int i = 0; i < l; i++) {
@@ -53,80 +56,65 @@ void reader(char* file) {
             words[i] = s;
         }
 
-        masterSorter(words, l, o);
-        printer(p);
+        unsigned int complen = 0;
+        string* temp = new string[l];
+        for(int i = 0; i < l; i++) {
+                if((int)words[i].at(0) >= complen) {
+                    complen = (int)words[i].at(0);
+                }
+        }
+        int j = 0;
+        for(unsigned int i = 0; i <= complen; i++) {
+            for(int k = 0; k < l; k++) {
+                unsigned int x = (int)words[k].at(0);
+                if(x == i) {
+                    temp[j] = words[k];
+                    j++;
+                }
+            }
+        }
 
+        //masterSorter(words, l, o); this is going to be implemented into my own vector sometime this weekend.
+        lazySort(temp, l, fill);
+
+        delete[] temp;
+        delete[] words;
         delete[] imps;
     f.close();
 }
 
-void masterSorter(string* w, int top, int bot) {
-    //Here, the program "elegantly" sorts whatever is in the vector
-    //basically tried to code what was taught of merge sort in class since those were easily my most detailed notes
+//I gave up.  Selection/bucket sort time since I want the extra 15 pts
 
-    int half = top/2;
-
-
-    while(bot < top) {
-        masterSorter(w, half, bot);
-        masterSorter(w, top, half+1);
-
-        drudgeSorter(w, top, half, bot);
-    }
-    for(int i = 0; i < top; i++) {
-        cout << w[i] << endl;
-    }
-}
-//during this unholy hour that I watch The Strain, I realize that perhaps I should sort like all the other good sorters
-//the master sorter barely does anything, it just tells the other sorters to do its work given its specifications
-void drudgeSorter(string *w, int top, int med, int bot) {
-    int a = med-bot; //let's say that half = 7. your bot = 0,
-    int b = top-med; // half equals 7, and your top is 15. you need an array of size 8.
-    string *x = new string[a];
-    string *y = new string[b];
-
-    for(int i = 0; i < med; i++) {
-        x[i] = w[i];
-    }
-    for(int i = med; i < top; i++) {
-        y[i] = w[i];
-    }
-    int i, j;
-
-    i = bot;
-    j = top-1;
-    while(i < a) {
-        if(x[i].length() < x[a-1].length())
-            i++;
-        else {
-            swap(x[i], x[a-1]);
-            i++;
+void lazySort(string *w, int max, char *fill) {
+    unsigned int complen = 0;
+    string* temp = new string[max];
+    for(int i = 0; i < max; i++) {
+        if(w[i].length() > complen) {
+            complen = w[i].length();
         }
-        i++;
     }
-    while(j > b) {
-        if(y[j].length() > y[0].length())
-            j--;
-        else {
-            swap(y[j], y[0]);
-            j--;
+    int j = 0;
+    for(unsigned int i = 0; i <= complen; i++) {
+        for(int k = 0; k < max; k++) {
+            unsigned int x = w[k].length();
+            if(x == i) {
+                temp[j] = w[k];
+                j++;
+            }
         }
-        j--;
     }
-    for(int k = 0; k < med; k++) {
-        w[k] = x[k];
-    }
-    for(int k = med; k < top; k++) {
-        w[k] = y[k];
-    }
-    delete[] x;
-    delete[] y;
+
+    printer(temp, fill);
+    delete[] temp;
 }
 
-
-
-void printer(int d) {
-    //nothing for now
+void printer(string* m, char* fill) {
+    ofstream ofs(fill);
+    ofs.flush();
+    for(int i = 0; i <= printedL; i++) {
+        ofs << m[i] << endl;
+    }
+    ofs.close();
 }
 
 
@@ -251,4 +239,73 @@ void printer(int d) {
         }
     }
     ...............................................
+
+    will implement this to my own later
+    //int l, p, o;
+    //o = 0;
+
+
+//void masterSorter(string* w, int top, int bot) {
+//    //Here, the program "elegantly" sorts whatever is in the vector
+//    //basically tried to code what was taught of merge sort in class since those were easily my most detailed notes
+
+//    int half = top/2;
+
+
+//    while(bot < top) {
+//        masterSorter(w, half, bot);
+//        masterSorter(w, top, half+1);
+
+//        drudgeSorter(w, top, half, bot);
+//    }
+//    for(int i = 0; i < top; i++) {
+//        cout << w[i] << endl;
+//    }
+//}
+////during this unholy hour that I watch The Strain, I realize that perhaps I should sort like all the other good sorters
+////the master sorter barely does anything, it just tells the other sorters to do its work given its specifications
+//void drudgeSorter(string *w, int top, int med, int bot) {
+//    int a = med-bot; //let's say that half = 7. your bot = 0,
+//    int b = top-med; // half equals 7, and your top is 15. you need an array of size 8.
+//    string *x = new string[a];
+//    string *y = new string[b];
+
+//    for(int i = 0; i < med; i++) {
+//        x[i] = w[i];
+//    }
+//    for(int i = med; i < top; i++) {
+//        y[i] = w[i];
+//    }
+//    int i, j;
+
+//    i = 0;
+//    j = 0;
+//    while(i < a) {
+//        if(x[i].length() <= x[a-1].length())
+//            i++;
+//        else {
+//            swap(x[i], x[a-1]);
+//            i++;
+//        }
+//        i++;
+//    }
+//    while(j < b) {
+//        if(y[j].length() <= y[b-1].length())
+//            j++;
+//        else {
+//            swap(y[j], y[0]);
+//            j++;
+//        }
+//        j--;
+//    }
+//    for(int k = 0; k < med; k++) {
+//        w[k] = x[k];
+//    }
+//    for(int k = med; k < top; k++) {
+//        w[k] = y[k];
+//    }
+//    delete[] x;
+//    delete[] y;
+//}
+
  */
