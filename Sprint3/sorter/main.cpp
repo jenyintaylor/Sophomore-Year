@@ -82,25 +82,27 @@ void sorter(string* w, int top, int bot) {
     int i = bot;
     int j = (top - 1);
     while(i < j) {
-        while(i < pivnuml) {
+        if(i < pivnuml) {
             if(w[i].length() < pivlenl) {
                 i++;
             } else {
                 swap(w[i], pivl);
                 i++;
             }
-        }
-        while(j > pivnumh) {
+        } i++;
+        if(j > pivnumh) {
             if(w[j].length() > pivlenh) {
                 j--;
             } else {
                 swap(w[j], pivh);
                 j--;
             }
-        }
+        } j--;
     }
-
-
+    if(top/2 != 1) {
+        sorter(w, pivnuml, bot);
+        sorter(w, top, pivnumh);
+    }
     for(int k = 0; k < top; k++) {
         cout << w[k] << endl;
     }
