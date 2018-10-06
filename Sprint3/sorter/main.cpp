@@ -111,7 +111,7 @@ void lazySort(string *w, int max, char *fill) {
 void printer(string* m, char* fill) {
     ofstream ofs(fill);
     ofs.flush();
-    for(int i = 0; i <= printedL; i++) {
+    for(int i = 0; i < printedL; i++) {
         ofs << m[i] << endl;
     }
     ofs.close();
