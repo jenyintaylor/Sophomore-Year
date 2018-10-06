@@ -13,7 +13,8 @@ using namespace std;
 
 //prots
 void reader(char *file);
-void sorter(string *w, int top, int bot);
+void masterSorter(string *w, int top, int bot);
+void drudgeSorter(string* w, int top, int med, int bot);
 void printer(int d);
 
 //functs
@@ -52,61 +53,77 @@ void reader(char* file) {
             words[i] = s;
         }
 
-//        thing.resize(l); //New idea, use array
-
-//        //adding words
-//        for(int i = 0; i < l; i++) {
-//            string s;
-//            getline(f,s);
-//            thing.push(s);
-//            cout << s << endl;
-//        }
-        sorter(words, l, o);
+        masterSorter(words, l, o);
         printer(p);
 
         delete[] imps;
     f.close();
 }
 
-void sorter(string* w, int top, int bot) {
+void masterSorter(string* w, int top, int bot) {
     //Here, the program "elegantly" sorts whatever is in the vector
+    //basically tried to code what was taught of merge sort in class since those were easily my most detailed notes
 
-    int pivnum = top/2;
-    int pivnuml = pivnum-1;
-    int pivnumh = pivnum+1;
-    string pivl = w[pivnuml];
-    string pivh = w[pivnumh];
-    unsigned int pivlenl = pivl.length();
-    unsigned int pivlenh = pivh.length();
+    int half = top/2;
 
-    int i = bot;
-    int j = (top - 1);
-    while(i < j) {
-        if(i < pivnuml) {
-            if(w[i].length() < pivlenl) {
-                i++;
-            } else {
-                swap(w[i], pivl);
-                i++;
-            }
-        } i++;
-        if(j > pivnumh) {
-            if(w[j].length() > pivlenh) {
-                j--;
-            } else {
-                swap(w[j], pivh);
-                j--;
-            }
-        } j--;
+
+    while(bot < top) {
+        masterSorter(w, half, bot);
+        masterSorter(w, top, half+1);
+
+        drudgeSorter(w, top, half, bot);
     }
-    if(top/2 != 1) {
-        sorter(w, pivnuml, bot);
-        sorter(w, top, pivnumh);
-    }
-    for(int k = 0; k < top; k++) {
-        cout << w[k] << endl;
+    for(int i = 0; i < top; i++) {
+        cout << w[i] << endl;
     }
 }
+//during this unholy hour that I watch The Strain, I realize that perhaps I should sort like all the other good sorters
+//the master sorter barely does anything, it just tells the other sorters to do its work given its specifications
+void drudgeSorter(string *w, int top, int med, int bot) {
+    int a = med-bot; //let's say that half = 7. your bot = 0,
+    int b = top-med; // half equals 7, and your top is 15. you need an array of size 8.
+    string *x = new string[a];
+    string *y = new string[b];
+
+    for(int i = 0; i < med; i++) {
+        x[i] = w[i];
+    }
+    for(int i = med; i < top; i++) {
+        y[i] = w[i];
+    }
+    int i, j;
+
+    i = bot;
+    j = top-1;
+    while(i < a) {
+        if(x[i].length() < x[a-1].length())
+            i++;
+        else {
+            swap(x[i], x[a-1]);
+            i++;
+        }
+        i++;
+    }
+    while(j > b) {
+        if(y[j].length() > y[0].length())
+            j--;
+        else {
+            swap(y[j], y[0]);
+            j--;
+        }
+        j--;
+    }
+    for(int k = 0; k < med; k++) {
+        w[k] = x[k];
+    }
+    for(int k = med; k < top; k++) {
+        w[k] = y[k];
+    }
+    delete[] x;
+    delete[] y;
+}
+
+
 
 void printer(int d) {
     //nothing for now
