@@ -51,6 +51,9 @@ public:
     int size();
     void clear();
 
+    void resetIterator();
+    T& next();
+
     ~LinkedList();
 };
 //------------------------------------------------------LL Header ends
@@ -145,6 +148,7 @@ void LinkedList<T>::pushAt(T val, int loc) {
         elem->next = curr->next; //its next pointer now points to whatever was after curr (putting it in between the two of them)
         curr->next->prev = elem; //the thing-after-curr's previous pointer now points to the new thing
         curr->next = elem; //and last, curr's next ptr now points to the new thing
+        length++;
     }
 }
 
@@ -220,6 +224,19 @@ void LinkedList<T>::clear() {
     length = 0;
 }
 
+template <typename T>
+void LinkedList<T>::resetIterator() {
+    c_iter = head;
+}
+
+template <typename T>
+T& LinkedList<T>::next() {
+    if(c_iter == nullptr)
+        throw out_of_range;
+    c_iter = c_iter->next;
+    return c_iter->prev->data;
+
+}
 
 template <typename T>
 LinkedList<T>::~LinkedList() {}
