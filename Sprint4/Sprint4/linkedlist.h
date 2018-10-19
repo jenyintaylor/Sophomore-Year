@@ -1,6 +1,8 @@
 #ifndef LINKEDLIST_H
 #define LINKEDLIST_H
 
+#include <iostream>
+#include <stdexcept>
 using namespace std;
 
 template <typename T>
@@ -42,9 +44,9 @@ public:
     void popBack();
     void pushAt(T val, int loc);
     void popAt(int loc);
+    bool isEmpty();
     void printForward();
     void printBackward();
-    bool isEmpty();
     int search(T val);
     int size();
     void clear();
@@ -87,6 +89,7 @@ void LinkedList<T>::push(T val) {
         tail->next->prev = tail;
         tail = tail->next;
     }
+    length++;
 
 }
 template <typename T>
@@ -125,12 +128,46 @@ void LinkedList<T>::popBack() {
 
 template <typename T>
 void LinkedList<T>::pushAt(T val, int loc) {
-
+    ListNode* curr = head;
+    if(curr = head) {
+        push(val);
+        return;
+    }
+    while(curr->next != nullptr && loc > 0) {
+        curr = curr->next;
+        loc--;
+    }
+    if(curr == head || curr == tail)
+        push(val);
+    else {
+        ListNode* elem = new ListNode(val); //Dynamically allocate the new thing
+        elem->prev = curr; //its previous ptr now points to whatever curr is (thus putting it after curr)
+        elem->next = curr->next; //its next pointer now points to whatever was after curr (putting it in between the two of them)
+        curr->next->prev = elem; //the thing-after-curr's previous pointer now points to the new thing
+        curr->next = elem; //and last, curr's next ptr now points to the new thing
+    }
 }
 
 template <typename T>
 void LinkedList<T>::popAt(int loc) {
-
+    if(loc >= length)
+        throw out_of_range;
+    ListNode* curr = head;
+    while(loc > 0) {
+        curr = curr->next;
+        loc--;
+        //This is another one from class.  It's interesting because it's moving to the location instead of immediately hopping to it
+    }
+    if(curr == head) //Basically if the list had only a single element
+        popFront();
+    else if(curr == tail)
+        popBack();
+    else {
+        curr->prev->next = curr->next; //The element-before-curr's next pointer now points to the element after curr
+        curr->next->prev = curr->prev; //The element-after-curr's prev pointer now points to the element before curr
+        delete curr; //then you delete curr
+        length--; //Proud that I understand this now
+    }
 }
 
 template <typename T>
@@ -163,6 +200,7 @@ int LinkedList<T>::search(T val) {
         count++;
         curr = curr->next;
     }
+    return count;
 
 }
 
