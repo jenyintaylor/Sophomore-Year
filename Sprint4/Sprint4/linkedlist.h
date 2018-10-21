@@ -3,34 +3,73 @@
 
 #include <iostream>
 #include <stdexcept>
+
 using namespace std;
 
 template <typename T>
 class ListNode {
     template <class U>
-    friend class LinkedList ;
+    friend class LinkedList;
+public:
+    ListNode();
+    ListNode(T val);
+    ListNode(const ListNode<T> &src);
+    ListNode& operator=(const ListNode<T> &src);
+    ~ListNode();
 private:
     T data;
     ListNode<T> *next, *prev;
 };
 //-----------------------------------------------------------------Node Header ends
+template <typename T>
+ListNode<T>::ListNode()
+    :next(nullptr), prev(nullptr) {}
 
 template <typename T>
-ListNode::ListNode(T val)
+ListNode<T>::ListNode(T val)
     :data(val), next(nullptr), prev(nullptr) {}
+
+template <typename T>
+ListNode<T>::ListNode(const ListNode<T> &src) {
+    data = src.data;
+    next = src.next;
+    prev = src.prev;
+}
+
+template <typename T>
+ListNode<T>& ListNode<T>::operator=(const ListNode<T> &src) {
+    if(*this != &src) {
+        delete data;
+        delete next;
+        delete prev;
+
+        ListNode(src);
+    }
+    return *this;
+}
+
+template <typename T>
+ListNode<T>::~ListNode() {
+    delete next;
+    delete prev;
+}
 
 //-----------------------------------------------------------------Node implementation ends
 template <typename T>
 class LinkedList {
 private:
+    ListNode<T> *head;
+    ListNode<T> *tail;
     int length;
-    ListNode *head, *tail, *c_iter;
+    ListNode<T> *c_iter;
 
-    void printBackward(ListNode* var) {
-        if(var == nullptr)
-            return; //At the end of the list, this will be true, then it does the thing that's two lines below
-        printBackward(var->next); //This will just keep going recursively
-        cout << curr->data << endl;
+    void printBackward(ListNode<T>* var) {
+        if(var == nullptr) {
+            return;
+        } //At the end of the list, this will be true, then it does the thing that's two lines below
+        printBackward(var->next);
+        //This will just keep going recursively
+        cout << var->data << endl;
         //The last one will do this first, then the line of returns just keeps printing out lines in reverse order
         return;
     }
@@ -61,7 +100,7 @@ public:
 
 template <typename T>
 LinkedList<T>::LinkedList()
-    :head(nullptr), tail(nullptr), length(0) {}
+    :head(nullptr), tail(nullptr), length(0), c_iter(nullptr) {}
 
 template <typename T>
 LinkedList<T>::LinkedList(const LinkedList<T> &src) {
@@ -71,24 +110,25 @@ LinkedList<T>::LinkedList(const LinkedList<T> &src) {
 }
 
 template <typename T>
-LinkedList LinkedList<T>::operator=(const LinkedList<T> &src) {
+LinkedList<T>& LinkedList<T>::operator=(const LinkedList<T> &src) {
     if(head != nullptr) {
         clear();
     }
-    ListNode *curr = src.head;
+    ListNode<T> *curr = src.head;
     while(curr != nullptr) {
         push(curr->data);
         curr = curr->next;
     }
+    return *curr;
 }
 
 template <typename T>
 void LinkedList<T>::push(T val) {
-    if(head == nullptr) {
-        head = new ListNode(val);
+    if(this->isEmpty()) {
+        head = new ListNode<T>(val);
         tail = head;
     } else {
-        tail->next = new ListNode(val);
+        tail->next = new ListNode<T>(val);
         tail->next->prev = tail;
         tail = tail->next;
     }
@@ -131,7 +171,7 @@ void LinkedList<T>::popBack() {
 
 template <typename T>
 void LinkedList<T>::pushAt(T val, int loc) {
-    ListNode* curr = head;
+    ListNode<T>* curr = head;
     if(curr = head) {
         push(val);
         return;
@@ -143,7 +183,7 @@ void LinkedList<T>::pushAt(T val, int loc) {
     if(curr == head || curr == tail)
         push(val);
     else {
-        ListNode* elem = new ListNode(val); //Dynamically allocate the new thing
+        ListNode<T>* elem = new ListNode<T>(val); //Dynamically allocate the new thing
         elem->prev = curr; //its previous ptr now points to whatever curr is (thus putting it after curr)
         elem->next = curr->next; //its next pointer now points to whatever was after curr (putting it in between the two of them)
         curr->next->prev = elem; //the thing-after-curr's previous pointer now points to the new thing
@@ -154,9 +194,10 @@ void LinkedList<T>::pushAt(T val, int loc) {
 
 template <typename T>
 void LinkedList<T>::popAt(int loc) {
-    if(loc >= length)
-        throw out_of_range;
-    ListNode* curr = head;
+    if(loc >= length) {
+        throw out_of_range("That position does not exist in the Linked List.\n");
+    }
+    ListNode<T>* curr = head;
     while(loc > 0) {
         curr = curr->next;
         loc--;
@@ -184,7 +225,7 @@ bool LinkedList<T>::isEmpty() {
 
 template <typename T>
 void LinkedList<T>::printForward() {
-    ListNode* curr = head;
+    ListNode<T>* curr = head;
     while(curr != nullptr) {
         cout << curr->data << endl;
         curr = curr->next;
@@ -198,7 +239,7 @@ void LinkedList<T>::printBackward() {
 }
 template <typename T>
 int LinkedList<T>::search(T val) {
-    ListNode* curr = head;
+    ListNode<T>* curr = head;
     int count = 0;
     while(curr->data != val || curr->next != nullptr) {
         count++;
@@ -215,13 +256,14 @@ int LinkedList<T>::size() {
 
 template <typename T>
 void LinkedList<T>::clear() {
-    ListNode* curr = head;
+    ListNode<T>* curr = head;
     while(curr->next != nullptr) {
         delete curr;
         curr = curr->next;
     }
     head = nullptr;
     length = 0;
+    delete curr;
 }
 
 template <typename T>
@@ -231,13 +273,19 @@ void LinkedList<T>::resetIterator() {
 
 template <typename T>
 T& LinkedList<T>::next() {
-    if(c_iter == nullptr)
-        throw out_of_range;
+    if(c_iter == nullptr) {
+        throw out_of_range("Iterator has not been reset yet.\n");
+    }
     c_iter = c_iter->next;
     return c_iter->prev->data;
 
 }
 
 template <typename T>
-LinkedList<T>::~LinkedList() {}
+LinkedList<T>::~LinkedList() {
+    head->~ListNode();
+    tail->~ListNode();
+    c_iter->~ListNode();
+}
+
 #endif // LINKEDLIST_H

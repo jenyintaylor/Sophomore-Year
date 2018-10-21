@@ -1,9 +1,14 @@
 #include <iostream>
+#include "linkedlist.h"
 
 using namespace std;
 
 int main()
 {
-    cout << "Hello World!" << endl;
-    return 0;
+    LinkedList<int> joker;
+    for(int i = 0; i < 50; i++) {
+        joker.push(i*50);
+    }
+    joker.popFront();
+    joker.printForward();
 }
