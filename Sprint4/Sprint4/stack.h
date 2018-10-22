@@ -6,6 +6,7 @@ template <typename T>
 class Stack {
 private:
     LinkedList<T> data;
+    int length;
 
 public:
     Stack();
@@ -16,10 +17,12 @@ public:
     bool isEmpty();
     bool contains(T val);
     T peek();
+    int size();
 };
 
 template <typename T>
-Stack<T>::Stack() {
+Stack<T>::Stack()
+    :length(0) {
 
 }
 
@@ -40,12 +43,14 @@ Stack<T>& Stack<T>::operator=(const Stack<T> &src) {
 template <typename T>
 void Stack<T>::push(T val) {
     data.push(val);
+    length++;
 }
 
 template <typename T>
 T Stack<T>::pop() {
     T temp = data[data.size()-1];
     data.popBack();
+    length--;
     return temp;
 }
 
@@ -69,5 +74,10 @@ bool Stack<T>::contains(T val) {
 template <typename T>
 T Stack<T>::peek() {
     return data[data.size()-1];
+}
+
+template <typename T>
+int Stack<T>::size() {
+    return length;
 }
 #endif // STACK_H

@@ -1,6 +1,10 @@
 #ifndef LINKEDLIST_H
 #define LINKEDLIST_H
 
+
+//started making doubly sure that the heads and tails were the ends each time.
+//Also, I had an idea to code in an array to make using the []operator a lot easier.  Did not work
+//Will keep working on it but need to turn this in for now
 #include <iostream>
 #include <stdexcept>
 
@@ -59,6 +63,9 @@ private:
     ListNode<T> *tail;
     int length;
     ListNode<T> *c_iter;
+    //T* list;
+    //int holder = 50;
+    //int counter = 0;
 
     void printBackward(ListNode<T>* var) {
         if(var == nullptr) {
@@ -88,6 +95,7 @@ public:
     int search(T val);
     int size();
     void clear();
+    //void organizerFix();
 
     void resetIterator();
     T& next();
@@ -99,7 +107,10 @@ public:
 
 template <typename T>
 LinkedList<T>::LinkedList()
-    :head(nullptr), tail(nullptr), length(0), c_iter(nullptr) {}
+    :head(nullptr), tail(nullptr), length(0), c_iter(nullptr) {
+
+    //list = new T[holder];
+}
 
 template <typename T>
 LinkedList<T>::LinkedList(const LinkedList<T> &src) {
@@ -113,7 +124,8 @@ LinkedList<T>& LinkedList<T>::operator=(const LinkedList<T> &src) {
     if(head != nullptr) {
         clear();
     }
-    ListNode<T> *curr = src.head;
+    head = src.head;
+    ListNode<T> *curr = head;
     while(curr != nullptr) {
         push(curr->data);
         curr = curr->next;
@@ -123,18 +135,19 @@ LinkedList<T>& LinkedList<T>::operator=(const LinkedList<T> &src) {
 
 template <typename T>
 T LinkedList<T>::operator[](int location) {
-    resetIterator();
 
     if(location < 0 || location >= length)
         throw out_of_range("Location is out of range");
+
+
+    resetIterator();
     T result;
-    int i = 0;
-    while(i < (location+1)) {
+    for(int i = 0; i < location+1; i++) {
         result = next();
-        i++;
     }
-    c_iter = nullptr;
     return result;
+    //return this->list[location];  //will figure out a way to make this work later
+
 }
 
 
@@ -142,14 +155,23 @@ template <typename T>
 void LinkedList<T>::push(T val) {
     if(this->isEmpty()) {
         ListNode<T> *curr = new ListNode<T>(val);
+        //organizerFix();
+        //list[counter] = val;
+
         head = curr;
         tail = head;
     } else {
         ListNode<T> *curr = new ListNode<T>(val);
+        //organizerFix();
+        //list[counter] = val;
+
         tail->next = curr;
         curr->prev = tail;
         tail = curr;
     }
+    head->prev = nullptr;
+    tail->next = nullptr;
+    //counter++;
     length++;
 
 }
@@ -161,11 +183,25 @@ void LinkedList<T>::pushFront(T val) {
         return;
     } else {
         ListNode<T> *curr = new ListNode<T>(val);
+
+//        organizerFix();
+//        T* temp = new T[holder];
+//        for(int i = 0; i < length; i++) {
+//            temp[i+1] = list[i];
+//        }
+//        temp[0] = val;
+//        delete[] list;
+//        list = temp;
+//        delete[] temp;
+
         head->prev = curr;
         curr->next = head;
         head = curr;
     }
+    //counter++;
     length++;
+    head->prev = nullptr;
+    tail->next = nullptr;
 }
 template <typename T>
 void LinkedList<T>::popFront() {
@@ -175,15 +211,30 @@ void LinkedList<T>::popFront() {
         delete head;
         head = nullptr;
         tail = nullptr;
-        length--;
+        //list[0] = nullptr;
+
+
     } else {
         ListNode<T> *temp = head->next;
         delete head;
         head = nullptr;
         temp->prev = nullptr;
         head = temp;
-        length--;
+
+//        T* standin = new T[holder];
+//        for(int i = 0; i < length; i++) {
+//            standin[i] = list[i+1];
+//        }
+//        delete[] list;
+//        list = standin;
+//        delete[] standin;
+
+
     }
+    //counter--;
+    head->prev = nullptr;
+    tail->next = nullptr;
+    length--;
 }
 
 template <typename T>
@@ -194,20 +245,28 @@ void LinkedList<T>::popBack() {
         delete head;
         head = nullptr;
         tail = nullptr;
-        length--;
+        //list[length-1] = nullptr;
+
     } else {
         ListNode<T> *temp = tail->prev;
         delete tail;
         tail = nullptr;
         temp->next = nullptr;
-        length--;
+        tail = temp;
+        //list[length-1] = nullptr;
+
     }
+    //counter--;
+    head->prev = nullptr;
+    tail->next = nullptr;
+    length--;
 }
 
 template <typename T>
 void LinkedList<T>::pushAt(T val, int loc) {
     if(loc == 0) {
-
+        pushFront(val);
+        return;
     }
 
     ListNode<T>* curr = head;
@@ -219,20 +278,40 @@ void LinkedList<T>::pushAt(T val, int loc) {
         curr = curr->next;
         loc--;
     }
-    if(curr == head || curr == tail)
+    if(curr == head)
+        pushFront(val);
+    else if(curr = tail)
         push(val);
     else {
-        ListNode<T>* elem = new ListNode<T>(val); //Dynamically allocate the new thing
-        elem->prev = curr; //its previous ptr now points to whatever curr is (thus putting it after curr)
-        elem->next = curr->next; //its next pointer now points to whatever was after curr (putting it in between the two of them)
-        curr->next->prev = elem; //the thing-after-curr's previous pointer now points to the new thing
-        curr->next = elem; //and last, curr's next ptr now points to the new thing
+        ListNode<T> *temp = new ListNode<T>(val);
+        temp->prev = curr;
+        temp->next = curr->next;
+        curr->next->prev = temp;
+        curr->next = temp;
+
+//        T* temp = new T[holder];
+//        for(int i = 0; i < loc; i++) {
+//            temp[i] = list[i];
+//        }
+//        temp[loc] = val;
+//        for(int i = (loc+1); i < length; i++) {
+//            temp[i] = list[i-1];
+//        }
+//        delete[] list;
+//        list = temp;
+//        delete[] temp;
+
+
+        //counter++;
+        head->prev = nullptr;
+        tail->next = nullptr;
         length++;
     }
 }
 
 template <typename T>
 void LinkedList<T>::popAt(int loc) {
+    int pos = loc;
     if(loc >= length) {
         throw out_of_range("That position does not exist in the Linked List.\n");
     }
@@ -246,9 +325,9 @@ void LinkedList<T>::popAt(int loc) {
         return;
     }
 
-    while(loc > 0) {
+    while(pos > 0) {
         curr = curr->next;
-        loc--;
+        pos--;
         //This is another one from class.  It's interesting because it's moving to the location instead of immediately hopping to it
     }
     if(curr == head) //Basically if the list had only a single element
@@ -259,7 +338,22 @@ void LinkedList<T>::popAt(int loc) {
         curr->prev->next = curr->next; //The element-before-curr's next pointer now points to the element after curr
         curr->next->prev = curr->prev; //The element-after-curr's prev pointer now points to the element before curr
         delete curr; //then you delete curr
+
+//        T* temp = new T[holder];
+//        for(int i = 0; i < loc; i++) {
+//            temp[i] = list[i];
+//        }
+//        for(int i = (loc+1); i < length; i++) {
+//            temp[i-1] = list[i];
+//        }
+//        delete[] list;
+//        list = temp;
+//        delete[] temp;
+
+        //counter--;
         length--; //Proud that I understand this now
+        head->prev = nullptr;
+        tail->next = nullptr;
     }
 }
 
@@ -311,10 +405,31 @@ void LinkedList<T>::clear() {
         delete curr;
         curr = curr->next;
     }
+    //delete[] list;
+
     head = nullptr;
+    tail = nullptr;
+    //list = nullptr;
+    //counter = 0;
     length = 0;
     delete curr;
 }
+//template <typename T>
+//void LinkedList<T>::organizerFix() {
+//    if(length >= (holder-5)) {
+//        holder *= 2;
+//        T* temp = new T[holder];
+//        for(int i = 0; i < length; i++) {
+//            temp[i] = list[i];
+//        }
+//        delete[] list;
+//        list = temp;
+//        delete[] temp;
+//        return;
+//    } else {
+//        return;
+//    }
+//}
 
 template <typename T>
 void LinkedList<T>::resetIterator() {
@@ -325,17 +440,18 @@ template <typename T>
 T& LinkedList<T>::next() {
     if(c_iter == nullptr) {
         throw out_of_range("Iterator has not been reset yet.\n");
-        resetIterator();
+    } else if (c_iter == tail) {
+        return tail->data;
     }
     c_iter = c_iter->next;
     return c_iter->prev->data;
 
 }
 
+
 template <typename T>
 LinkedList<T>::~LinkedList() {
-    while(head != nullptr)
-        popFront();
+    clear();
 }
 
 #endif // LINKEDLIST_H
