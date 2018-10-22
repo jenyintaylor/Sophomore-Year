@@ -49,10 +49,7 @@ ListNode<T>& ListNode<T>::operator=(const ListNode<T> &src) {
 }
 
 template <typename T>
-ListNode<T>::~ListNode() {
-    delete next;
-    delete prev;
-}
+ListNode<T>::~ListNode() {}
 
 //-----------------------------------------------------------------Node implementation ends
 template <typename T>
@@ -77,6 +74,7 @@ public:
     LinkedList();
     LinkedList(const LinkedList<T> &src);
     LinkedList& operator=(const LinkedList<T> &src);
+    T& operator[](int location);
 
     void push(T val);
     void popFront();
@@ -123,14 +121,31 @@ LinkedList<T>& LinkedList<T>::operator=(const LinkedList<T> &src) {
 }
 
 template <typename T>
+T& LinkedList<T>::operator[](int location) {
+    resetIterator();
+
+    if(location < 0 || location > length)
+        throw out_of_range("Location is out of range");
+    ListNode<T> *result;
+    int i = 0;
+    while(i < (location+1)) {
+        result = next();
+        i++;
+    }
+    return result;
+}
+
+template <typename T>
 void LinkedList<T>::push(T val) {
     if(this->isEmpty()) {
-        head = new ListNode<T>(val);
+        ListNode<T> *curr = new ListNode<T>(val);
+        head = curr;
         tail = head;
     } else {
-        tail->next = new ListNode<T>(val);
-        tail->next->prev = tail;
-        tail = tail->next;
+        ListNode<T> *curr = new ListNode<T>(val);
+        tail->next = curr;
+        curr->prev = tail;
+        tail = curr;
     }
     length++;
 
@@ -145,9 +160,11 @@ void LinkedList<T>::popFront() {
         tail = nullptr;
         length--;
     } else {
-        head = head->next;
-        delete head->prev;
-        head->prev = nullptr;
+        ListNode<T> *temp = head->next;
+        delete head;
+        head = nullptr;
+        temp->prev = nullptr;
+        head = temp;
         length--;
     }
 }
@@ -162,9 +179,10 @@ void LinkedList<T>::popBack() {
         tail = nullptr;
         length--;
     } else {
-        tail = tail->prev;
-        delete tail->next;
-        tail->next = nullptr;
+        ListNode<T> *temp = tail->prev;
+        delete tail;
+        tail = nullptr;
+        temp->next = nullptr;
         length--;
     }
 }
@@ -172,7 +190,7 @@ void LinkedList<T>::popBack() {
 template <typename T>
 void LinkedList<T>::pushAt(T val, int loc) {
     ListNode<T>* curr = head;
-    if(curr = head) {
+    if(curr == nullptr) {
         push(val);
         return;
     }
@@ -283,9 +301,8 @@ T& LinkedList<T>::next() {
 
 template <typename T>
 LinkedList<T>::~LinkedList() {
-    head->~ListNode();
-    tail->~ListNode();
-    c_iter->~ListNode();
+    while(tail->next != nullptr)
+        popFront();
 }
 
 #endif // LINKEDLIST_H

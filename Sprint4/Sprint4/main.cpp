@@ -7,8 +7,8 @@ int main()
 {
     LinkedList<int> joker;
     for(int i = 0; i < 50; i++) {
-        joker.push(i*50);
+        joker.push((i*50)+1);
     }
-    joker.popFront();
+    joker.popBack();
     joker.printForward();
 }
