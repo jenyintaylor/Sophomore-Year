@@ -9,6 +9,8 @@ private:
 
 public:
     Stack();
+    Stack(const Stack<T> &src);
+    Stack& operator=(const Stack<T> &src);
     void push(T val);
     T pop();
     bool isEmpty();
@@ -28,7 +30,11 @@ Stack<T>::Stack(const Stack<T> &src) {
 
 template <typename T>
 Stack<T>& Stack<T>::operator=(const Stack<T> &src) {
-
+    if(*this != &src) {
+        delete data;
+        Stack(src);
+    }
+    return *this;
 }
 
 template <typename T>
