@@ -41,7 +41,7 @@ void AdjList<T>::insertFor(T find, T val) {
 
 template <typename T>
 T AdjList<T>::stepIteratorFor(T val) {
-    LinkedList* l = findWhereFirstIs(val);
+    LinkedList<T>* l = findWhereFirstIs(val);
     return l->next();
 }
 #endif // ADJLIST_H

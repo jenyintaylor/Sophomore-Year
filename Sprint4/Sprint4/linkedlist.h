@@ -274,6 +274,8 @@ int LinkedList<T>::size() {
 
 template <typename T>
 void LinkedList<T>::clear() {
+    if(isEmpty())
+        return;
     ListNode<T>* curr = head;
     while(curr->next != nullptr) {
         delete curr;

@@ -60,7 +60,7 @@ bool Stack<T>::isEmpty() {
 template <typename T>
 bool Stack<T>::contains(T val) {
     for(int i = 0; i < data.size(); i++) {
-        if(data[i] == T)
+        if(data[i] == val)
             return true;
     }
     return false;
