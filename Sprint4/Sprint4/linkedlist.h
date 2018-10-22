@@ -301,7 +301,7 @@ T& LinkedList<T>::next() {
 
 template <typename T>
 LinkedList<T>::~LinkedList() {
-    while(tail->next != nullptr)
+    while(head != nullptr)
         popFront();
 }
 
