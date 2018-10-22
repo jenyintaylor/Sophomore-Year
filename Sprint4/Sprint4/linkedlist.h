@@ -74,9 +74,10 @@ public:
     LinkedList();
     LinkedList(const LinkedList<T> &src);
     LinkedList& operator=(const LinkedList<T> &src);
-    T& operator[](int location);
+    T operator[](int location); //Since i'm not using pointers for data, I kinda have to send the item itself
 
     void push(T val);
+    void pushFront(T val);
     void popFront();
     void popBack();
     void pushAt(T val, int loc);
@@ -121,19 +122,21 @@ LinkedList<T>& LinkedList<T>::operator=(const LinkedList<T> &src) {
 }
 
 template <typename T>
-T& LinkedList<T>::operator[](int location) {
+T LinkedList<T>::operator[](int location) {
     resetIterator();
 
-    if(location < 0 || location > length)
+    if(location < 0 || location >= length)
         throw out_of_range("Location is out of range");
-    ListNode<T> *result;
+    T result;
     int i = 0;
     while(i < (location+1)) {
         result = next();
         i++;
     }
+    c_iter = nullptr;
     return result;
 }
+
 
 template <typename T>
 void LinkedList<T>::push(T val) {
@@ -149,6 +152,20 @@ void LinkedList<T>::push(T val) {
     }
     length++;
 
+}
+
+template <typename T>
+void LinkedList<T>::pushFront(T val) {
+    if(isEmpty()) {
+        push(val);
+        return;
+    } else {
+        ListNode<T> *curr = new ListNode<T>(val);
+        head->prev = curr;
+        curr->next = head;
+        head = curr;
+    }
+    length++;
 }
 template <typename T>
 void LinkedList<T>::popFront() {
@@ -189,6 +206,10 @@ void LinkedList<T>::popBack() {
 
 template <typename T>
 void LinkedList<T>::pushAt(T val, int loc) {
+    if(loc == 0) {
+
+    }
+
     ListNode<T>* curr = head;
     if(curr == nullptr) {
         push(val);
@@ -216,6 +237,15 @@ void LinkedList<T>::popAt(int loc) {
         throw out_of_range("That position does not exist in the Linked List.\n");
     }
     ListNode<T>* curr = head;
+    if(loc == 0) {
+        popFront();
+        return;
+    }
+    if(loc == (length-1)){
+        popBack();
+        return;
+    }
+
     while(loc > 0) {
         curr = curr->next;
         loc--;
@@ -295,6 +325,7 @@ template <typename T>
 T& LinkedList<T>::next() {
     if(c_iter == nullptr) {
         throw out_of_range("Iterator has not been reset yet.\n");
+        resetIterator();
     }
     c_iter = c_iter->next;
     return c_iter->prev->data;
