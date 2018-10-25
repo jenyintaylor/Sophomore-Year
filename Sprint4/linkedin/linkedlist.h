@@ -63,9 +63,7 @@ private:
     ListNode<T> *tail;
     int length;
     ListNode<T> *c_iter;
-    //T* list;
-    //int holder = 50;
-    //int counter = 0;
+
 
     void printBackward(ListNode<T>* var) {
         if(var == nullptr) {
@@ -95,7 +93,6 @@ public:
     int search(T val);
     int size();
     void clear();
-    //void organizerFix();
 
     void resetIterator();
     T& next();
@@ -109,7 +106,6 @@ template <typename T>
 LinkedList<T>::LinkedList()
     :head(nullptr), tail(nullptr), length(0), c_iter(nullptr) {
 
-    //list = new T[holder];
 }
 
 template <typename T>
@@ -146,7 +142,6 @@ T LinkedList<T>::operator[](int location) {
         result = next();
     }
     return result;
-    //return this->list[location];  //will figure out a way to make this work later
 
 }
 
@@ -155,15 +150,11 @@ template <typename T>
 void LinkedList<T>::push(T val) {
     if(this->isEmpty()) {
         ListNode<T> *curr = new ListNode<T>(val);
-        //organizerFix();
-        //list[counter] = val;
 
         head = curr;
         tail = head;
     } else {
         ListNode<T> *curr = new ListNode<T>(val);
-        //organizerFix();
-        //list[counter] = val;
 
         tail->next = curr;
         curr->prev = tail;
@@ -171,7 +162,6 @@ void LinkedList<T>::push(T val) {
     }
     head->prev = nullptr;
     tail->next = nullptr;
-    //counter++;
     length++;
 
 }
@@ -184,21 +174,10 @@ void LinkedList<T>::pushFront(T val) {
     } else {
         ListNode<T> *curr = new ListNode<T>(val);
 
-//        organizerFix();
-//        T* temp = new T[holder];
-//        for(int i = 0; i < length; i++) {
-//            temp[i+1] = list[i];
-//        }
-//        temp[0] = val;
-//        delete[] list;
-//        list = temp;
-//        delete[] temp;
-
         head->prev = curr;
         curr->next = head;
         head = curr;
     }
-    //counter++;
     length++;
     head->prev = nullptr;
     tail->next = nullptr;
@@ -211,7 +190,6 @@ void LinkedList<T>::popFront() {
         delete head;
         head = nullptr;
         tail = nullptr;
-        //list[0] = nullptr;
 
 
     } else {
@@ -221,17 +199,7 @@ void LinkedList<T>::popFront() {
         temp->prev = nullptr;
         head = temp;
 
-//        T* standin = new T[holder];
-//        for(int i = 0; i < length; i++) {
-//            standin[i] = list[i+1];
-//        }
-//        delete[] list;
-//        list = standin;
-//        delete[] standin;
-
-
     }
-    //counter--;
     head->prev = nullptr;
     tail->next = nullptr;
     length--;
@@ -245,7 +213,6 @@ void LinkedList<T>::popBack() {
         delete head;
         head = nullptr;
         tail = nullptr;
-        //list[length-1] = nullptr;
 
     } else {
         ListNode<T> *temp = tail->prev;
@@ -253,10 +220,8 @@ void LinkedList<T>::popBack() {
         tail = nullptr;
         temp->next = nullptr;
         tail = temp;
-        //list[length-1] = nullptr;
 
     }
-    //counter--;
     head->prev = nullptr;
     tail->next = nullptr;
     length--;
@@ -264,45 +229,36 @@ void LinkedList<T>::popBack() {
 
 template <typename T>
 void LinkedList<T>::pushAt(T val, int loc) {
+    if(loc < 0 || loc >= length)
+        throw out_of_range("The location you're trying to push is out of range. Try pushFront(value) or pushBack(value) instead");
+
     if(loc == 0) {
         pushFront(val);
         return;
     }
-
+    resetIterator();
     ListNode<T>* curr = head;
     if(curr == nullptr) {
         push(val);
         return;
     }
+
+
     while(curr->next != nullptr && loc > 0) {
         curr = curr->next;
         loc--;
     }
     if(curr == head)
         pushFront(val);
-    else if(curr = tail)
+    else if(curr == tail)
         push(val);
     else {
         ListNode<T> *temp = new ListNode<T>(val);
-        temp->prev = curr;
-        temp->next = curr->next;
-        curr->next->prev = temp;
-        curr->next = temp;
+        temp->prev = curr->prev;
+        temp->next = curr;
+        curr->prev->next = temp;
+        curr->prev = temp;
 
-//        T* temp = new T[holder];
-//        for(int i = 0; i < loc; i++) {
-//            temp[i] = list[i];
-//        }
-//        temp[loc] = val;
-//        for(int i = (loc+1); i < length; i++) {
-//            temp[i] = list[i-1];
-//        }
-//        delete[] list;
-//        list = temp;
-//        delete[] temp;
-
-
-        //counter++;
         head->prev = nullptr;
         tail->next = nullptr;
         length++;
@@ -377,7 +333,8 @@ void LinkedList<T>::printForward() {
 template <typename T>
 void LinkedList<T>::printBackward() {
     printBackward(head);
-    //I could just do this with tail and basically just merge this and its private-overloaded version, but I wanted to try this
+    //I could just do something like the implementation of printForward with tail and basically just merge this and its private-overloaded version, but I wanted to try this
+    //Neato. It worked.
 }
 template <typename T>
 int LinkedList<T>::search(T val) {
@@ -405,31 +362,13 @@ void LinkedList<T>::clear() {
         delete curr;
         curr = curr->next;
     }
-    //delete[] list;
 
     head = nullptr;
     tail = nullptr;
-    //list = nullptr;
-    //counter = 0;
     length = 0;
     delete curr;
 }
-//template <typename T>
-//void LinkedList<T>::organizerFix() {
-//    if(length >= (holder-5)) {
-//        holder *= 2;
-//        T* temp = new T[holder];
-//        for(int i = 0; i < length; i++) {
-//            temp[i] = list[i];
-//        }
-//        delete[] list;
-//        list = temp;
-//        delete[] temp;
-//        return;
-//    } else {
-//        return;
-//    }
-//}
+
 
 template <typename T>
 void LinkedList<T>::resetIterator() {

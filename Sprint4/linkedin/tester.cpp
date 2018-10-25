@@ -20,11 +20,14 @@ TEST_CASE("Linked List Tester") {
 
 
     }
-    for(int i = 0; i < 15; i++)
-        tester.push("cat");
-    tester.printForward();
-    cout << "--------------------------" << endl;
-    tester.printBackward();
+    string s = "cat";
+    for(int i = 0; i < 15; i++) {
+        tester.push(s);
+        s += "t";
+    }
+    //tester.printForward();
+    //cout << "--------------------------" << endl;
+    //tester.printBackward();
 
     SECTION("Push functions work") {
 
@@ -38,6 +41,7 @@ TEST_CASE("Linked List Tester") {
 
         tester.pushAt("dog",1); //been looking at this one too long. It's hit or miss
         //will fix during the week
+        //Fixed it.  Keeping the note there.  Too proud not to.
 
 
 
@@ -46,11 +50,16 @@ TEST_CASE("Linked List Tester") {
         tester.popBack();
         tester.popFront();
         REQUIRE(tester.size() == 13);
-        REQUIRE(tester[0] == "cat");
+        REQUIRE(tester[0] == "catt"); //neato
         tester.push("dog");
-        tester.popAt(13);
-        REQUIRE(tester[12] == "cat");
+        tester.popAt(1);
+        REQUIRE(tester[1] == "catttt");
+        tester.pushAt("dog", 1);
         tester.printForward();
+        cout << "--------------------------" << endl;
+        tester.popAt(1);
+        tester.printForward();
+
 
     }
     SECTION("Clear works") {
@@ -93,7 +102,7 @@ TEST_CASE("Adjacency lists") {
     AdjList<int> kek;
 
     SECTION("Insert for") {
-        //kek.insertFor(4, 6);
+        kek.insertFor(4, 6);
 
     }
 

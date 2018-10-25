@@ -17,13 +17,13 @@ private:
     }
 
 public:
-    void insertFor(T find, T val);
+    void insertFor(const T &find, T val);
     T stepIteratorFor(T val);
 
 };
 
 template <typename T>
-void AdjList<T>::insertFor(T find, T val) {
+void AdjList<T>::insertFor(const T& find, T val) {
     bool inserted = false;
     for(int i = 0; i < data.size(); i++) {
         if(data[i][0] == find) {
