@@ -39,7 +39,7 @@ TEST_CASE("Linked List Tester") {
         REQUIRE(tester[16] == "totally still cat");
         REQUIRE(tester.size() == 17);
 
-        tester.pushAt("dog",1); //been looking at this one too long. It's hit or miss
+        tester.pushTo("dog",1); //been looking at this one too long. It's hit or miss
         //will fix during the week
         //Fixed it.  Keeping the note there.  Too proud not to.
 
@@ -54,7 +54,7 @@ TEST_CASE("Linked List Tester") {
         tester.push("dog");
         tester.popAt(1);
         REQUIRE(tester[1] == "catttt");
-        tester.pushAt("dog", 1);
+        tester.pushTo("dog", 1);
         tester.printForward();
         cout << "--------------------------" << endl;
         tester.popAt(1);

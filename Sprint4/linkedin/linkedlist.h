@@ -85,7 +85,7 @@ public:
     void pushFront(T val);
     void popFront();
     void popBack();
-    void pushAt(T val, int loc);
+    void pushTo(T val, int loc);
     void popAt(int loc);
     bool isEmpty();
     void printForward();
@@ -117,28 +117,28 @@ LinkedList<T>::LinkedList(const LinkedList<T> &src) {
 
 template <typename T>
 LinkedList<T>& LinkedList<T>::operator=(const LinkedList<T> &src) {
-    if(head != nullptr) {
-        clear();
-    }
-    head = src.head;
-    ListNode<T> *curr = head;
-    while(curr != nullptr) {
-        push(curr->data);
-        curr = curr->next;
-    }
-    return *curr;
+
+        if(head != nullptr) {
+            clear();
+        }
+        head = src.head;
+        ListNode<T> *curr = head;
+        while(curr != nullptr) {
+            push(curr->data);
+            curr = curr->next;
+        }
+        return *curr;
 }
 
 template <typename T>
 T LinkedList<T>::operator[](int location) {
-
     if(location < 0 || location >= length)
         throw out_of_range("Location is out of range");
 
 
     resetIterator();
     T result;
-    for(int i = 0; i < location+1; i++) {
+    for(int i = 0; i <= location; i++) {
         result = next();
     }
     return result;
@@ -228,7 +228,7 @@ void LinkedList<T>::popBack() {
 }
 
 template <typename T>
-void LinkedList<T>::pushAt(T val, int loc) {
+void LinkedList<T>::pushTo(T val, int loc) {
     if(loc < 0 || loc >= length)
         throw out_of_range("The location you're trying to push is out of range. Try pushFront(value) or pushBack(value) instead");
 
@@ -295,18 +295,7 @@ void LinkedList<T>::popAt(int loc) {
         curr->next->prev = curr->prev; //The element-after-curr's prev pointer now points to the element before curr
         delete curr; //then you delete curr
 
-//        T* temp = new T[holder];
-//        for(int i = 0; i < loc; i++) {
-//            temp[i] = list[i];
-//        }
-//        for(int i = (loc+1); i < length; i++) {
-//            temp[i-1] = list[i];
-//        }
-//        delete[] list;
-//        list = temp;
-//        delete[] temp;
 
-        //counter--;
         length--; //Proud that I understand this now
         head->prev = nullptr;
         tail->next = nullptr;
