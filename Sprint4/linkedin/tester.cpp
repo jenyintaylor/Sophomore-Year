@@ -100,9 +100,8 @@ TEST_CASE("Stack also works") {
 }
 TEST_CASE("Adjacency lists") {
     AdjList<int> kek;
-
     SECTION("Insert for") {
-        kek.insertFor(4, 6);
+        //kek.insertFor(4, 6);
 
     }
 

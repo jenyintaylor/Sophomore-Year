@@ -75,11 +75,15 @@ private:
         //The last one will do this first, then the line of returns just keeps printing out lines in reverse order
         return;
     }
+
+//priv ends
+
+
 public:
     LinkedList();
     LinkedList(const LinkedList<T> &src);
     LinkedList& operator=(const LinkedList<T> &src);
-    T operator[](int location); //Since i'm not using pointers for data, I kinda have to send the item itself
+    T& operator[](int location); //Since i'm not using pointers for data, I kinda have to send the item itself
 
     void push(T val);
     void pushFront(T val);
@@ -96,6 +100,7 @@ public:
 
     void resetIterator();
     T& next();
+    T& getHead();
 
     ~LinkedList();
 };
@@ -127,21 +132,22 @@ LinkedList<T>& LinkedList<T>::operator=(const LinkedList<T> &src) {
             push(curr->data);
             curr = curr->next;
         }
+
         return *curr;
 }
 
 template <typename T>
-T LinkedList<T>::operator[](int location) {
+T& LinkedList<T>::operator[](int location) {
     if(location < 0 || location >= length)
         throw out_of_range("Location is out of range");
 
-
     resetIterator();
-    T result;
+
+    T holder;
     for(int i = 0; i <= location; i++) {
-        result = next();
+        holder = next();
     }
-    return result;
+    return c_iter->prev->data;
 
 }
 
@@ -376,6 +382,10 @@ T& LinkedList<T>::next() {
 
 }
 
+template <typename T>
+T& LinkedList<T>::getHead() {
+    return head->data;
+}
 
 template <typename T>
 LinkedList<T>::~LinkedList() {

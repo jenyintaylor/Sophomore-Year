@@ -27,8 +27,9 @@ public:
 
 };
 template <typename T>
-AdjList<T>::AdjList()
-    :data(){}
+AdjList<T>::AdjList() {
+
+}
 
 template <typename T>
 AdjList<T>::AdjList(const AdjList<T> &src) {
@@ -44,7 +45,8 @@ AdjList<T>& AdjList<T>::operator=(const AdjList<T> &src) {
     while(ij < data.size()) {
         int jj = 0;
         while(jj < data[ij].size()) {
-            data[ij][jj] = src[ij][jj]; //just goes through and matches
+            data[ij][jj] = src[ij][jj];
+            //just goes through and matches
             jj++;
         }
         ij++;
@@ -54,9 +56,19 @@ AdjList<T>& AdjList<T>::operator=(const AdjList<T> &src) {
 
 template <typename T>
 void AdjList<T>::insertFor(T find, T val) {
+
+    if(data.isEmpty()) {
+        LinkedList<T> temp;
+        temp.push(find);
+        temp.push(val);
+        data.push(temp);
+        return;
+    }
+
     bool inserted = false;
+
     for(int i = 0; i < data.size(); i++) {
-        if(data[i][0] == find) {
+        if(data[i].getHead() == find) {
             data[i].push(val);
             inserted = true;
         }
