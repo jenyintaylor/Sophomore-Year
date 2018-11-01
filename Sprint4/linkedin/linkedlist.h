@@ -62,6 +62,7 @@ private:
     ListNode<T> *head;
     ListNode<T> *tail;
     int length;
+    T holder;
     ListNode<T> *c_iter;
 
 
@@ -143,7 +144,7 @@ T& LinkedList<T>::operator[](int location) {
 
     resetIterator();
 
-    T holder;
+
     for(int i = 0; i < location; i++) {
         holder = next();
     }

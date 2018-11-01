@@ -82,4 +82,43 @@ void actualMain(char* input) {
 
 
 
+Next lab
+You wanna get the number of people within two hops.
+
+    6
+    Tom | Bob
+    Tom | Jon
+    Tom | Sam
+    Sam | Bob
+    Sam | Sal
+    Bob | Sal
+
+    So lets say you're choosing Bob as your starter
+    Bob 4
+    Jon 3
+    Sal 3
+    Sam 4
+    Tom 4
+
+    Now you have the stack part.
+
+    initial:
+        push start person
+        reset iterators
+        while(!stack isempty)
+            if
+                top == target
+                lol iunno. write it if you want
+            else
+                top-iter-step
+                while(top-iter exists && stack contains top.iter)
+                    top.iter.step
+            if top.iter.exists
+                push(top.iter)
+            else
+                top.iter.reset
+                pop
+
+
+
 */
