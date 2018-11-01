@@ -134,7 +134,7 @@ LinkedList<T>& LinkedList<T>::operator=(const LinkedList<T> &src) {
             curr = curr->next;
         }
 
-        return *curr;
+        return *this;
 }
 
 template <typename T>
@@ -144,10 +144,12 @@ T& LinkedList<T>::operator[](int location) {
 
     resetIterator();
 
-
-    for(int i = 0; i < location; i++) {
-        holder = next();
+    if(location != 0) {
+        for(int i = 0; i < location; i++) {
+            holder = next();
+        }
     }
+
     return c_iter->data;
 
 }

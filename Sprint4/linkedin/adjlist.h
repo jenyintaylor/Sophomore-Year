@@ -28,7 +28,8 @@ public:
 };
 template <typename T>
 AdjList<T>::AdjList() {
-
+    LinkedList<T> filler;
+    data.push(filler);
 }
 
 template <typename T>
@@ -57,11 +58,9 @@ AdjList<T>& AdjList<T>::operator=(const AdjList<T> &src) {
 template <typename T>
 void AdjList<T>::insertFor(T find, T val) {
 
-    if(data.isEmpty()) {
-        LinkedList<T> temp;
-        temp.push(find);
-        temp.push(val);
-        data.push(temp);
+    if(data[0].isEmpty()) {
+        data[0].push(find);
+        data[0].push(val);
         return;
     }
 
@@ -73,11 +72,13 @@ void AdjList<T>::insertFor(T find, T val) {
             inserted = true;
         }
     }
+
     if(!inserted) {
         LinkedList<T> temp;
+        data.push(temp);
         temp.push(find);
         temp.push(val);
-        data.push(temp);
+
     }
 }
 

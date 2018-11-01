@@ -108,7 +108,8 @@ You wanna get the number of people within two hops.
         while(!stack isempty)
             if
                 top == target
-                lol iunno. write it if you want
+                save path length (stack size -1)
+                pop
             else
                 top-iter-step
                 while(top-iter exists && stack contains top.iter)
