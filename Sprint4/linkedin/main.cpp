@@ -16,7 +16,7 @@ int main(int argc, char* argv[]) {
     if(strcmp(argv[1], "-t") == 0) {
         Catch::Session().run();
     } else if(strcmp(argv[1], "-r") == 0) {
-        actualMain(argv[1]); //cannot lie, basically ripped from my Sprint 2
+        actualMain(argv[1]); //basically ripped from my Sprint 2
     }
 }
 

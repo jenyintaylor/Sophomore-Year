@@ -144,10 +144,10 @@ T& LinkedList<T>::operator[](int location) {
     resetIterator();
 
     T holder;
-    for(int i = 0; i <= location; i++) {
+    for(int i = 0; i < location; i++) {
         holder = next();
     }
-    return c_iter->prev->data;
+    return c_iter->data;
 
 }
 
