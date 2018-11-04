@@ -134,7 +134,7 @@ LinkedList<T>& LinkedList<T>::operator=(const LinkedList<T> &src) {
             curr = curr->next;
         }
 
-        return *this;
+        return *this; //A bug which I could not fix was solved by changing the return's name.  I am broken.
 }
 
 template <typename T>
