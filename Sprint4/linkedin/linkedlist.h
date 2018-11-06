@@ -376,7 +376,7 @@ void LinkedList<T>::resetIterator() {
 template <typename T>
 T& LinkedList<T>::next() {
     if(c_iter == nullptr) {
-        throw out_of_range("Iterator has not been reset yet.\n");
+        throw out_of_range("The iterator has not been reset or the linked list has not been filled.\n");
     } else if (c_iter == tail) {
         return tail->data;
     }

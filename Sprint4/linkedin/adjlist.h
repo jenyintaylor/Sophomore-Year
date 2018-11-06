@@ -67,7 +67,7 @@ void AdjList<T>::insertFor(T find, T val) {
     bool inserted = false;
 
     for(int i = 0; i < data.size(); i++) {
-        if(data[i].getHead() == find) {
+        if(data[i][0] == find) {
             data[i].push(val);
             inserted = true;
         }

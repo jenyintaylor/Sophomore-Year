@@ -13,6 +13,7 @@ using namespace std;
 
 AdjList<string> lister;
 ofstream fileprint;
+int maxval = 0;
 
 void actualMain(char *input);
 void minDistance(char *distance);
@@ -44,6 +45,7 @@ void actualMain(char* input) {
     int linenum;
     string line, dummy;
     reader >> linenum;
+    maxval = linenum;
 
     getline(reader, dummy);
 
@@ -109,15 +111,32 @@ void backTrack(string s1, string s2) {
     //note: s1 is the active user, s2 is the target user.
 
     jenga.push(s1);
-
+    int dist = 0;
+    string* topiter = nullptr;
+    topiter = &s1;
 
     while(!jenga.isEmpty()) {
         if(jenga.peek() == s2) {
-            int dist = jenga.size()-1;
+            dist = jenga.size()-1;
+            if(dist <= maxval)
+                maxval = dist;
 
+            jenga.pop();
+        } else {
+            *topiter = lister.stepIteratorFor(*topiter);
+            while(topiter != nullptr && jenga.contains(*topiter)) {
+                *topiter = lister.stepIteratorFor(*topiter);
+            }
+            if(topiter != nullptr)
+                jenga.push(*topiter);
+            else {
+                topiter = &s1;
+                jenga.pop();
+            }
         }
 
     }
+    printer(s1, s2, maxval);
 
 }
 
