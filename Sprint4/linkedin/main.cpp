@@ -7,23 +7,64 @@
 #include <iostream>
 #include <string>
 #include <cstring>
+#include <fstream>
 
 using namespace std;
 
+AdjList<string> lister;
+
 void actualMain(char *input);
+void minDistance(char *distance);
+void adder(string s, int l);
 
 int main(int argc, char* argv[]) {
     if(strcmp(argv[1], "-t") == 0) {
         Catch::Session().run();
     } else if(strcmp(argv[1], "-r") == 0) {
-        actualMain(argv[1]); //basically ripped from my Sprint 2
+        actualMain(argv[2]); //basically ripped from my Sprint 2
+        minDistance(argv[3]);
     }
 }
 
 //what is in here TBD
 void actualMain(char* input) {
+    ifstream reader;
+    reader.open(input);
 
+
+    int linenum;
+    string line;
+    reader >> linenum;
+
+    for(int i = 0; i <= linenum; i++) {
+        getline(reader, line);
+        unsigned int loc = line.find('|');
+
+        adder(line, loc);
+    }
+    //I know I will end up typing this likely twice
 }
+
+void minDistance(char *distance) {
+    ifstream reader;
+    reader.open(distance);
+}
+
+void adder(string s, int l) {
+    string w1 = "";
+    string w2 = "";
+
+    for(int i = 0; i < l; i++) {
+        w1 += s[i];
+    }
+    for(int i = l+1; i < s.size(); i++) {
+        w2 += s[i];
+    }
+    cout << w1 << "--" << w2 << endl;
+}
+
+
+
 /*Lab notes:
     They also want to see how many people a certain person is connected to (both directly and indirectly with a max distance of 2)
     Really, follow rules and ask help again later if needed
