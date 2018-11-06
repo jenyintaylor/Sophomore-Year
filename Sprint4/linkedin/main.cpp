@@ -16,13 +16,17 @@ AdjList<string> lister;
 void actualMain(char *input);
 void minDistance(char *distance);
 void adder(string s, int l);
+void distCheck(string s, int l);
+void backTrack(string s1, string s2);
 
 int main(int argc, char* argv[]) {
     if(strcmp(argv[1], "-t") == 0) {
         Catch::Session().run();
     } else if(strcmp(argv[1], "-r") == 0) {
+
         actualMain(argv[2]); //basically ripped from my Sprint 2
         minDistance(argv[3]);
+
     }
 }
 
@@ -33,24 +37,39 @@ void actualMain(char* input) {
 
 
     int linenum;
-    string line;
+    string line, dummy;
     reader >> linenum;
 
-    for(int i = 0; i <= linenum; i++) {
+    getline(reader, dummy);
+
+    for(int i = 0; i < linenum; i++) {
         getline(reader, line);
         unsigned int loc = line.find('|');
 
         adder(line, loc);
     }
-    //I know I will end up typing this likely twice
 }
 
 void minDistance(char *distance) {
     ifstream reader;
     reader.open(distance);
+
+
+    int linenum;
+    string line, dummy;
+    reader >> linenum;
+
+    getline(reader, dummy);
+
+    for(int i = 0; i < linenum; i++) {
+        getline(reader, line);
+        unsigned int loc = line.find('|');
+
+        distCheck(line, loc);
+    }
 }
 
-void adder(string s, int l) {
+void adder(string s, int l) { //makes the adjacency list
     string w1 = "";
     string w2 = "";
 
@@ -60,7 +79,27 @@ void adder(string s, int l) {
     for(int i = l+1; i < s.size(); i++) {
         w2 += s[i];
     }
-    cout << w1 << "--" << w2 << endl;
+    lister.insertFor(w1, w2);
+}
+
+void distCheck(string s, int l) { //for the distance file
+    string w1 = "";
+    string w2 = "";
+
+    for(int i = 0; i < l; i++) {
+        w1 += s[i];
+    }
+    for(int i = l+1; i < s.size(); i++) {
+        w2 += s[i];
+    }
+
+    backTrack(w1, w2);
+}
+
+void backTrack(string s1, string s2) {
+    Stack<string> jenga; //Amazing name
+
+
 }
 
 
