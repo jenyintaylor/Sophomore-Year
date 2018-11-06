@@ -12,21 +12,26 @@
 using namespace std;
 
 AdjList<string> lister;
+ofstream fileprint;
 
 void actualMain(char *input);
 void minDistance(char *distance);
 void adder(string s, int l);
 void distCheck(string s, int l);
 void backTrack(string s1, string s2);
+void printer(string s1, string s2 = "", int e = 0);
 
 int main(int argc, char* argv[]) {
     if(strcmp(argv[1], "-t") == 0) {
         Catch::Session().run();
+
     } else if(strcmp(argv[1], "-r") == 0) {
+        fileprint.open(argv[4]);
 
         actualMain(argv[2]); //basically ripped from my Sprint 2
         minDistance(argv[3]);
 
+        fileprint.close();
     }
 }
 
@@ -48,6 +53,8 @@ void actualMain(char* input) {
 
         adder(line, loc);
     }
+
+    reader.close();
 }
 
 void minDistance(char *distance) {
@@ -67,6 +74,7 @@ void minDistance(char *distance) {
 
         distCheck(line, loc);
     }
+    reader.close();
 }
 
 void adder(string s, int l) { //makes the adjacency list
@@ -98,8 +106,28 @@ void distCheck(string s, int l) { //for the distance file
 
 void backTrack(string s1, string s2) {
     Stack<string> jenga; //Amazing name
+    //note: s1 is the active user, s2 is the target user.
+
+    jenga.push(s1);
 
 
+    while(!jenga.isEmpty()) {
+        if(jenga.peek() == s2) {
+            int dist = jenga.size()-1;
+
+        }
+
+    }
+
+}
+
+void printer(string s1, string s2, int e) {
+
+    if(s2 != "") {
+        fileprint << s1 << " to " << s2 << ": " << e << " degrees of separation" << endl;
+    } else {
+        fileprint << s1 << " is connected (directly or indirectly) to " << e << " people" << endl;
+    }
 }
 
 

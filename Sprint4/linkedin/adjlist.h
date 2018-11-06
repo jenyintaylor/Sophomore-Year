@@ -52,7 +52,7 @@ AdjList<T>& AdjList<T>::operator=(const AdjList<T> &src) {
         }
         ij++;
     }
-
+    return *this;
 }
 
 template <typename T>
