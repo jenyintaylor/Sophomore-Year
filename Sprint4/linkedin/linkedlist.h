@@ -36,8 +36,7 @@ ListNode<T>::ListNode(T val)
 template <typename T>
 ListNode<T>::ListNode(const ListNode<T> &src) {
     data = src.data;
-    next = src.next;
-    prev = src.prev;
+
 }
 
 template <typename T>
@@ -102,6 +101,7 @@ public:
     void resetIterator();
     T& next();
     T& getHead();
+    T& getTail();
 
     ~LinkedList();
 };
@@ -146,7 +146,7 @@ T& LinkedList<T>::operator[](int location) {
 
     if(location != 0) {
         for(int i = 0; i < location; i++) {
-            holder = next();
+            next();
         }
     }
 
@@ -388,6 +388,11 @@ T& LinkedList<T>::next() {
 template <typename T>
 T& LinkedList<T>::getHead() {
     return head->data;
+}
+
+template <typename T>
+T& LinkedList<T>::getTail() {
+    return tail->data;
 }
 
 template <typename T>

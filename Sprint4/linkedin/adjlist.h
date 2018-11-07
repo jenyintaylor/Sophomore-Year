@@ -27,9 +27,11 @@ public:
 
 };
 template <typename T>
-AdjList<T>::AdjList() {
-    LinkedList<T> filler;
-    data.push(filler);
+AdjList<T>::AdjList(){
+    data.clear();
+    LinkedList<T> starter;
+    starter.clear();
+    data.push(starter);
 }
 
 template <typename T>
@@ -75,10 +77,12 @@ void AdjList<T>::insertFor(T find, T val) {
 
     if(!inserted) {
         LinkedList<T> temp;
-        data.push(temp);
+
         temp.push(find);
         temp.push(val);
 
+        data.push(temp);
+        inserted = true;
     }
 }
 
