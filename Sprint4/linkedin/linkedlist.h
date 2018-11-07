@@ -95,7 +95,7 @@ public:
     bool isEmpty();
     void printForward();
     void printBackward();
-    int search(T val);
+    int search(T &val);
     int size();
     void clear();
 
@@ -336,10 +336,11 @@ void LinkedList<T>::printBackward() {
     //Neato. It worked.
 }
 template <typename T>
-int LinkedList<T>::search(T val) {
+int LinkedList<T>::search(T& val) {
     ListNode<T>* curr = head;
     int count = 0;
-    while(curr->data != val || curr->next != nullptr) {
+    T stopper = curr->data;
+    while(&stopper != &val || curr->next != nullptr) {
         count++;
         curr = curr->next;
     }

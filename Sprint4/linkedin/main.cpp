@@ -14,6 +14,7 @@ using namespace std;
 AdjList<string> lister;
 ofstream fileprint;
 int maxval = 0;
+Stack<string> names;
 
 void actualMain(char *input);
 void minDistance(char *distance);
@@ -21,6 +22,7 @@ void adder(string s, int l);
 void distCheck(string s, int l);
 void backTrack(string s1, string s2);
 void printer(string s1, string s2 = "", int e = 0);
+//void printer();
 
 int main(int argc, char* argv[]) {
     if(strcmp(argv[1], "-t") == 0) {
@@ -31,6 +33,7 @@ int main(int argc, char* argv[]) {
 
         actualMain(argv[2]); //basically ripped from my Sprint 2
         minDistance(argv[3]);
+        //printer();
 
         fileprint.close();
     }
@@ -91,6 +94,8 @@ void adder(string s, int l) { //makes the adjacency list
         w2 += s[i];
     }
     lister.insertFor(w1, w2);
+    names.push(w1);
+    names.push(w2);
 }
 
 void distCheck(string s, int l) { //for the distance file
@@ -110,23 +115,35 @@ void backTrack(string s1, string s2) {
     Stack<string> jenga; //Amazing name
 
     //note: s1 is the active user, s2 is the target user.
-
+    int loopcount = 0;
+    int arblimit = 0;
     jenga.push(s1);
     int dist = 0;
+    arblimit = maxval*2;
     string* topiter = nullptr;
     topiter = &s1;
 
     while(!jenga.isEmpty()) {
         if(jenga.peek() == s2) {
             dist = jenga.size()-1;
-            if(dist <= maxval)
+            if(dist < maxval)
                 maxval = dist;
+            if(loopcount >= arblimit) { //I made an arbitrary limit based on the number of lines given by the input file. It should always be the number of lines * 2 in the absolute worst case scenario
+                break;
+            }
 
-            jenga.pop();
+            while(jenga.size() > 1) {
+                jenga.pop();
+            }
+            loopcount++;
+
+
+
+
         } else {
-            *topiter = lister.stepIteratorFor(*topiter);
+            topiter = lister.stepIteratorFor(*topiter);
             while(topiter != nullptr && jenga.contains(*topiter)) {
-                *topiter = lister.stepIteratorFor(*topiter);
+                topiter = lister.stepIteratorFor(*topiter);
             }
             if(topiter != nullptr)
                 jenga.push(*topiter);
@@ -149,6 +166,14 @@ void printer(string s1, string s2, int e) {
         fileprint << s1 << " is connected (directly or indirectly) to " << e << " people" << endl;
     }
 }
+
+//void printer() {
+//    while(!names.isEmpty()) {
+//        string volunteer = names.pop();
+//        int laziness = lister.lazyCount(volunteer);
+//        fileprint << volunteer << " has " << laziness << " close connections. " << endl;
+//    }
+//} // this did not work very well
 
 
 

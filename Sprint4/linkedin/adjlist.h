@@ -9,8 +9,9 @@ class AdjList {
 private:
     //members
     LinkedList<LinkedList<T>> data;
-    T* iter;
-    unsigned int itercount;
+    T* iter; //
+    int itercount;
+    int previtercount = 0; //iterator and previous iterator so I can actually iterate
 
     //priv funct
     LinkedList<T>* findWhereFirstIs(T val) {
@@ -27,7 +28,8 @@ public:
     AdjList& operator=(const AdjList<T> &src);
     ~AdjList();
     void insertFor(T find, T val);
-    T stepIteratorFor(T val);
+    T *stepIteratorFor(T val);
+    int lazyCount(T info);
 
 };
 template <typename T>
@@ -75,6 +77,7 @@ void AdjList<T>::insertFor(T find, T val) {
         if(data[i][0] == find) {
             data[i].push(val);
             inserted = true;
+
             return;
         }
     }
@@ -84,21 +87,65 @@ void AdjList<T>::insertFor(T find, T val) {
         data.push(temp);
         data[data.size()-1].push(find);
         data[data.size()-1].push(val);
+
+        LinkedList<T>* checker = findWhereFirstIs(val);
+        if(checker == nullptr) {
+            LinkedList<T> temp2;
+            data.push(temp2);
+            data[data.size()-1].push(val);
+            data[data.size()-1].push(find); //I did this because I realized that connected are mutual, and that is also the best way to shorten the degrees of separation
+        }
         return;
     }
 }
 
 template <typename T>
-T AdjList<T>::stepIteratorFor(T val) {
+T* AdjList<T>::stepIteratorFor(T val) {
     LinkedList<T>* l = findWhereFirstIs(val);
-    for(itercount = 0; itercount < l->size(); itercount++) {
-        if(i == l->size())
-            i = 0;
 
-        *iter = l[itercount];
+    if(l == nullptr) { //checks if l exists
+        iter = nullptr;
+        return iter;
     }
 
-    return *iter;
+
+    l->resetIterator(); //good, it does.
+
+
+    for(itercount = 0; itercount <= previtercount; itercount++) { //basically the same idea as the index operator
+        if(previtercount >= l->size())
+            previtercount = 0;
+
+        iter = &l->next();
+    }
+    previtercount++;
+
+    return iter;
+}
+
+template <typename T>
+int AdjList<T>::lazyCount(T info) {
+    int count = 0;
+    LinkedList<T>* lazy = findWhereFirstIs(info);
+    count = lazy->size()-1; //gets all the direct connections
+    if(count >= data.size()-1)
+        return count;
+
+    int loc = data.search(*lazy);
+
+    if(&data[loc] == &data.getTail()) {
+        count = count + (data[data.size()-2].size() - 2); //2 is the overlap in names, and also the position before the tail
+        return count;
+    }
+    if(&data[loc] == &data.getHead()) {
+        count = count + (data[1].size()-2);
+        return count;
+    }
+    else {
+
+        count = (data[loc-1].size()-2) + count + (data[loc+1].size()-2);
+        return count;
+    }
 }
 
 template <typename T>
