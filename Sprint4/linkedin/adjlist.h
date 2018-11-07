@@ -16,6 +16,7 @@ private:
             if(data[i][0] == val)
                 return &data[i];
         }
+        return nullptr;
     }
 public:
     AdjList();
@@ -27,11 +28,9 @@ public:
 
 };
 template <typename T>
-AdjList<T>::AdjList(){
-    data.clear();
-    LinkedList<T> starter;
-    starter.clear();
-    data.push(starter);
+AdjList<T>::AdjList() {
+    LinkedList<T> filler;
+    data.push(filler);
 }
 
 template <typename T>
@@ -72,17 +71,16 @@ void AdjList<T>::insertFor(T find, T val) {
         if(data[i][0] == find) {
             data[i].push(val);
             inserted = true;
+            return;
         }
     }
 
     if(!inserted) {
         LinkedList<T> temp;
-
-        temp.push(find);
-        temp.push(val);
-
         data.push(temp);
-        inserted = true;
+        data[data.size()-1].push(find);
+        data[data.size()-1].push(val);
+        return;
     }
 }
 

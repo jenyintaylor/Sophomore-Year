@@ -34,6 +34,7 @@ int main(int argc, char* argv[]) {
 
         fileprint.close();
     }
+    exit(0);
 }
 
 //what is in here TBD
@@ -86,7 +87,7 @@ void adder(string s, int l) { //makes the adjacency list
     for(int i = 0; i < l; i++) {
         w1 += s[i];
     }
-    for(int i = l+1; i < s.size(); i++) {
+    for(unsigned int i = l+1; i < s.size(); i++) {
         w2 += s[i];
     }
     lister.insertFor(w1, w2);
@@ -99,15 +100,15 @@ void distCheck(string s, int l) { //for the distance file
     for(int i = 0; i < l; i++) {
         w1 += s[i];
     }
-    for(int i = l+1; i < s.size(); i++) {
+    for(unsigned int i = l+1; i < s.size(); i++) {
         w2 += s[i];
     }
-
     backTrack(w1, w2);
 }
 
 void backTrack(string s1, string s2) {
     Stack<string> jenga; //Amazing name
+
     //note: s1 is the active user, s2 is the target user.
 
     jenga.push(s1);

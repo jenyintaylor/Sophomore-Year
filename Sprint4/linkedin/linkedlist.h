@@ -46,7 +46,9 @@ ListNode<T>& ListNode<T>::operator=(const ListNode<T> &src) {
         delete next;
         delete prev;
 
-        ListNode(src);
+        data = src.data;
+        next = src.next;
+        prev = src.prev;
     }
     return *this;
 }
@@ -61,7 +63,6 @@ private:
     ListNode<T> *head;
     ListNode<T> *tail;
     int length;
-    T holder;
     ListNode<T> *c_iter;
 
 
@@ -124,7 +125,7 @@ LinkedList<T>::LinkedList(const LinkedList<T> &src) {
 template <typename T>
 LinkedList<T>& LinkedList<T>::operator=(const LinkedList<T> &src) {
 
-        if(head != nullptr) {
+        if(*this != &src) {
             clear();
         }
         head = src.head;
@@ -150,7 +151,7 @@ T& LinkedList<T>::operator[](int location) {
         }
     }
 
-    return c_iter->data;
+    return this->c_iter->data;
 
 }
 
