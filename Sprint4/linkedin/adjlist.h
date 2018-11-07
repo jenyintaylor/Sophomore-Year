@@ -9,12 +9,15 @@ class AdjList {
 private:
     //members
     LinkedList<LinkedList<T>> data;
+    T* iter;
+    unsigned int itercount;
 
     //priv funct
     LinkedList<T>* findWhereFirstIs(T val) {
         for(int i = 0; i < data.size(); i++) {
-            if(data[i][0] == val)
+            if(data[i][0] == val)  {
                 return &data[i];
+            }
         }
         return nullptr;
     }
@@ -28,7 +31,8 @@ public:
 
 };
 template <typename T>
-AdjList<T>::AdjList() {
+AdjList<T>::AdjList()
+    :iter(nullptr) {
     LinkedList<T> filler;
     data.push(filler);
 }
@@ -87,7 +91,14 @@ void AdjList<T>::insertFor(T find, T val) {
 template <typename T>
 T AdjList<T>::stepIteratorFor(T val) {
     LinkedList<T>* l = findWhereFirstIs(val);
-    return l->next();
+    for(itercount = 0; itercount < l->size(); itercount++) {
+        if(i == l->size())
+            i = 0;
+
+        *iter = l[itercount];
+    }
+
+    return *iter;
 }
 
 template <typename T>
